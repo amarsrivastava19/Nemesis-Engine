@@ -1,8 +1,8 @@
 # Nemesis-Engine
 Modeling child abduction response by law enforcement using multi-agent adversarial networks with reinforcement learning. 
-<center>
+
 ![animation-ezgif com-resize](https://github.com/user-attachments/assets/d29810d4-77b8-4986-9c04-c72f8be14ed0) 
-</center>
+
 
 
 
