@@ -7,7 +7,9 @@ Modeling child abduction response by law enforcement using multi-agent adversari
 
 "Child abductions by strangers" are one of the most dangerous crimes that law enforcement agencies like the FBI investigate. This is because this class of crime comes with it a rapidly shrinking response window:
 
-**First responders typically have around 90 minutes to ascertain where an abductor and victim might be. They then have another 90 minutes to carry out a rescue attempt. This is because after the 3-hour mark, around 75% of victims are either never seen again or are subject to great physical and mental harm.**
+**First responders typically have around 90 minutes to ascertain where an abductor and victim might be.
+They then have another 90 minutes to carry out a rescue attempt. 
+After this critical 3-hour mark, around 75% of victims are either never found again.**
 
 -----------------------------
 
@@ -19,7 +21,6 @@ The Nemesis Engine is a strategic tool that investigates how a rapid response te
 Its a simulation-based method that models a game of "hide and seek" across real road networks and city features. It pits a team of N "seekers" against one "hider" with relatively simple rules. If the hider can evade the seekers for the length of the simulation (90 minutes), the hider wins. Otherwise, if any one of the seekers finds the hider, then the seeker team wins. 
 
 Through reinforcement learning, both sides of the game get more skilled over many repeated generations and simulations. The team of seekers become better first-responders; the hider becomes a better evader.
-
 
 If the seekers can manage to consistently find the hider -  even when the hider becomes highly skilled at evading detection, - then we may have identified ways for teams of first responders to mobilize in respond to abduction events. 
 
@@ -39,3 +40,8 @@ The generic process for building the Nemesis Engine was inspired by Deepmind's s
    - Append simulation outcomes to global game states
 6. Train Global Value Function against simulation game states.
 7. Train Local Policy Function against MCTS derived policies
+
+------------------------------------------------------
+
+
+## Theoretical Framework
