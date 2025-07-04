@@ -53,4 +53,21 @@ The generic build process for this simulation is noted as follows:
 
 ## Theoretical Framework
 
-The framework of this engine is largely inspired by Google Deepmind's seminal work with AlphaZero and AlphaGo. 
+The framework of this engine is largely inspired by Google Deepmind's seminal work with AlphaZero and AlphaGo. These were algorithms that taught themselves how to play board games like chess and Go without any human guidance or intervention.
+
+You can read one of the original papers here: [Original Publication](https://sci-hub.ru/10.1038/nature24270) .
+
+We use a modified version of the Monte Carlo search process that Deepmind outlined for their methodology in self-play reinforcement learning. 
+
+This process can be divided up into two distinct parts:
+
+   1. Self-play: the computer takes up both sides of the game simultaneously and plays against itself using its best judgement of its past experience playing the game. It does not update its knowledge during this phase.
+   2. Training: every game state during the self-play is saved in and collected. Two deep neural networks are trained off these game states to update the algorithm's "knowledge" of the game.
+
+The two deep neural networks that make up the "knowledge base" of the algorithm are as follows:
+
+ - A global value estimator: a function that takes in an environment state vector and outputs a value between (-1,1). You can lazily interpret this value as the probability of failure/success of the current game state. 
+ - A local policy header: a function that takes in agent's observation and outputs a probability distribution across the valid choices an agent can make at that given timestep.
+
+
+
