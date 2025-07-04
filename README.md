@@ -48,6 +48,8 @@ The generic build process for this simulation is noted as follows:
 6. Train Global Value Function against simulation game states.
 7. Train Local Policy Function against MCTS derived policies
 
+Steps 5-7 can then be cycled over and over until diminishing returns are had in agent self-improvement.
+
 ------------------------------------------------------
 
 
