@@ -45,8 +45,6 @@ If the seekers can manage to consistently find the hider -  even when the hider 
 
 The generic process for building the Nemesis Engine was inspired by Deepmind's seminal algorithm - AlphaZero. It uses a modified Monte Carlo Tree Search to simulate agent actions and derive training data for both the local agent policies and the global value function. 
 
-**Each of these steps can be explored in more detail through the .ipynb notebook files in /BuildProcess/.**
-
 1. Construct a "digital twin" of a geographic region
 2. Establish spawn points for your team of seekers and your hider
 3. Construct a global value function (Critic or Q-function)
