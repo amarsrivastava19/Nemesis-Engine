@@ -12,9 +12,11 @@
 
 "Child abductions by strangers" are one of the most dangerous crimes that law enforcement agencies like the FBI investigate. This is because this class of crime comes with it a rapidly shrinking response window:
 
-**First responders typically have around 90 minutes to ascertain where an abductor and victim might be.
-They then have another 90 minutes to carry out a rescue attempt. 
-After this critical 3-hour mark, around 75% of victims are either never found again.**
+**First responders typically have around 90 minutes to ascertain where an abductor and victim might be.**
+
+**They then have another 90 minutes to carry out a rescue attempt.**
+
+**After this critical 3-hour mark, around 75% of victims are either never found again.**
 
 -----------------------------
 
