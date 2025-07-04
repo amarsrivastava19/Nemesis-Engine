@@ -7,7 +7,7 @@ Modeling child abduction response by law enforcement using multi-agent adversari
 
 "Child abductions by strangers" are one of the most dangerous crimes that law enforcement agencies like the FBI investigate. This is because this class of crime comes with it a rapidly shrinking response window:
 
-** First responders typically have around 90 minutes to ascertain where an abductor and victim might be. They then have another 90 minutes to carry out a rescue attempt. This is because after the 3-hour mark, around 75% of victims are either never seen again or are subject to great physical and mental harm.**
+**First responders typically have around 90 minutes to ascertain where an abductor and victim might be. They then have another 90 minutes to carry out a rescue attempt. This is because after the 3-hour mark, around 75% of victims are either never seen again or are subject to great physical and mental harm.**
 
 -----------------------------
 
