@@ -3,26 +3,11 @@ Modeling child abduction response by law enforcement using multi-agent adversari
 
 ----------------------------
 
-## Introduction 
+## Problem Statement 
 
-The FBI deems "child abductions by strangers" one of the most dangerous crimes their agents face. This is because in the vast majority of cases, a responder only has around 90 minutes to track down the abductor. 
+"Child abductions by strangers" are one of the most dangerous crimes that law enforcement agencies like the FBI investigate. This is because this class of crime comes with it a rapidly shrinking response window:
 
-After this time horizon, the recovery rate drops precipitously - in 75% of cases the child is never seen again. 
-
-Analytical tools that can parse an Amber Alert and immediately convert the disparate signals into meaningful insights might be a useful tactical device - (see: Project Amber) - but understanding where a suspect might be is only half the battle. 
-
-Suppose we had a crystal ball which could reveal to us the general location of a suspected child abductor and the corresponding victim. We'll label this general area the "hot zone". 
-
-How does law enforcement mobilize in response to this insight? 
-
-- Are patrol cars dispatched to a single point? 
-
-- Are they dispatched to multiple points? 
-
-- Does one team go door to door in neighborhoods while another team zips from motel to hotel to bed-and-breakfast? 
-
-
-Even with a coordinated team of five or more patrol units, it isn't so easy to canvas an entire region quickly in order to find a hidden target. To make matters worse, it isn't guaranteed that the target is static or stationary. The abductor could be actively evading law enforcement. The abdutor could be fleeing, not only the "hot zone", but the county and state themselves. 
+** First responders typically have around 90 minutes to ascertain where an abductor and victim might be. They then have another 90 minutes to carry out a rescue attempt. This is because after the 3-hour mark, around 75% of victims are either never seen again or are subject to great physical and mental harm.**
 
 -----------------------------
 
