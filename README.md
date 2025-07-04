@@ -23,11 +23,11 @@
 
 ## The Nemesis Engine
 
-The Nemesis Engine is a strategic tool that investigates how a rapid response team can be mobilized in order to maximize the chances of stopping an abduction in progress. 
+The Nemesis Engine is primarily a strategic tool. Its a module that allows for an investigation into how law enforcement can be mobilized more effectively across real cities and towns. 
 
-Its a simulation-based method that models a game of "hide and seek" across real road networks and city features. It pits a team of N "seekers" against one "hider" with relatively simple rules. If the hider can evade the seekers for the length of the simulation (90 minutes), the hider wins. Otherwise, if any one of the seekers finds the hider, then the seeker team wins. 
+The engine simulates, or models, a game of "hide and seek". It pits a team of N "seekers" against one "hider" with relatively simple rules. If the hider can evade the seekers for the length of the simulation (90-180 minutes), the hider wins. Otherwise, if any one of the seekers finds the hider, then the seeker team wins. 
 
-Through reinforcement learning, both sides of the game get more skilled over many repeated generations and simulations. The team of seekers become better first-responders; the hider becomes a better evader.
+Through reinforcement learning, both the seekers and the hider become more skilled at thei respective roles. The team of seekers become better first-responders; the hider becomes a better evader.
 
 If the seekers can manage to consistently find the hider -  even when the hider becomes highly skilled at evading detection, - then we may have identified ways for teams of first responders to mobilize in respond to abduction events. 
 
