@@ -52,3 +52,5 @@ The generic build process for this simulation is noted as follows:
 
 
 ## Theoretical Framework
+
+The framework of this engine is largely inspired by Google Deepmind's seminal work with AlphaZero and AlphaGo. 
