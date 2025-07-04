@@ -38,8 +38,8 @@ If the seekers can manage to consistently find the hider -  even when the hider 
 
 The generic build process for this simulation is noted as follows: 
 
-1. Construct a "digital twin" of a geographic region
-2. Establish spawn points for your team of seekers and your hider
+1. Build a "digital twin" of a geographic region
+2. Develop a way to place agents dynamically in the environment.
 3. Construct a global value function (Critic or Q-function)
 4. Construct a local policy function (Actor)
 5. Simulate agent actions through Monte Carlo Tree Search (MCTS)
