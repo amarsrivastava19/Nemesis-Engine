@@ -57,14 +57,16 @@ class Agent():
         distance = R * c
         return distance
     
-    def RoadDistance(self, target_id):
-        path_length = nx.shortest_path_length(
-            self.G,
-            source=self.Node,
-            target=target_id,
-            weight='Distance_miles'
-        )
-        return path_length    
+    # def RoadDistance(self, target_id):
+    #     path_length = nx.shortest_path_length(
+    #         self.G,
+    #         source=self.Node,
+    #         target=target_id,
+    #         weight='Distance_miles'
+    #     )
+    #     return path_length    
+    def RoadDistance(self, precomputed_paths, v):
+        return precomputed_paths[self.Node][v]
 
 class Seeker(Agent):
     def __init__(self,G):
@@ -75,6 +77,22 @@ class Seeker(Agent):
         self.nearbyTeammates = 0
         self.hav_DistanceToTeam = []
         self.road_DistanceToTeam = []
+
+    def copy(self):
+        new = Seeker(self.G)
+        new.ID = self.ID
+        new.Node = self.Node
+        new.heading = self.heading
+        new.timestep = self.timestep
+        new.isOnHidingSpot = self.isOnHidingSpot
+        new.headingToLastSeen = self.headingToLastSeen
+        new.hav_DistanceToLastSeen = self.hav_DistanceToLastSeen
+        new.road_DistanceToLastSeen = self.road_DistanceToLastSeen
+        new.nearbyTeammates = self.nearbyTeammates
+        new.hav_DistanceToTeam = list(self.hav_DistanceToTeam)
+        new.road_DistanceToTeam = list(self.road_DistanceToTeam)
+        return new
+
 
     def BuildObservationVector(self):
         timestep = self.timestep
@@ -89,12 +107,21 @@ class Seeker(Agent):
         
         obs_i = [timestep, n, alpha, beta, D_hav, D_road, omega] + d_hav + d_road
         obs_i = np.array(obs_i)  # shape (17,)
-        obs_i = np.expand_dims(obs_i, axis=0) 
+        #obs_i = np.expand_dims(obs_i, axis=0) 
         return obs_i
         
 class Hider(Agent):
     def __init__(self, G):
         super().__init__(G)
+
+    def copy(self):
+        new = Hider(self.G)
+        new.ID = self.ID
+        new.Node = self.Node
+        new.heading = self.heading
+        new.timestep = self.timestep
+        new.isOnHidingSpot = self.isOnHidingSpot
+        return new
 
 
 

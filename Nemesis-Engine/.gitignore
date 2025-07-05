@@ -1,0 +1,17 @@
+# Ignore raw data
+<<<<<<< Updated upstream
+Nemesis-Engine/data/
+
+# Optional: also ignore big outputs
+
+*.parquet
+*.csv  # only if you want to skip raw CSVs too
+=======
+*/data/
+
+# Optional: also ignore big outputs
+*/replays/
+*/outputs/
+*.parquet
+*.csv  # only if you want to skip raw CSVs too
+>>>>>>> Stashed changes

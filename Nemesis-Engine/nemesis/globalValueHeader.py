@@ -7,7 +7,7 @@ import tensorflow as tf
 class ValueHeader(tf.keras.Model):
     def __init__(self, num_seekers = 5):
         super().__init__()
-        input_dim = 7 + num_seekers * 4  # example feature size
+        input_dim = 7 + num_seekers * 4  
         self.dense1 = layers.Dense(256, activation='relu')
         self.dense2 = layers.Dense(256, activation='relu')
         self.output_layer = layers.Dense(1, activation='tanh')
