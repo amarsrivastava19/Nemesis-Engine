@@ -3,7 +3,8 @@
 Nemesis-Engine/data/
 
 # Optional: also ignore big outputs
-
+*.pkl
+*.graphml
 *.parquet
 *.csv  # only if you want to skip raw CSVs too
 =======
