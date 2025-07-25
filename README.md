@@ -112,10 +112,12 @@ For more complex games like chess, this approach collapses under the weight of c
 
 <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/0ec5207a-3a77-4f31-9189-2df055ebc6db" />
 
-<br>
+<br><br>
 
 
-Monte Carlo Tree Search (MCTS) addresses this challenge by trading exhaustive exploration for probabilistic sampling. Instead of attempting to evaluate every branch, MCTS uses a tree policy to decide which branches to explore more deeply, balancing moves that look promising with those that haven’t been tried enough yet.
+**Monte Carlo Tree Search (MCTS)** addresses this challenge by trading exhaustive exploration for probabilistic sampling. 
+
+Instead of attempting to evaluate every branch, MCTS uses a tree policy to decide which branches to explore more deeply, balancing moves that look promising with those that haven’t been tried enough yet.
 
 The most common tree policy is the **Upper Confidence Bound for Trees** (UCB1):
 
@@ -414,6 +416,7 @@ The **dot product** (`f_iᵀ · (e_a + g(x_a))`) produces a raw **score** for ea
 
 ### Example Network Diagram
 
+<img width="1200" height="1000" alt="image" src="https://github.com/user-attachments/assets/4f3e9db5-530f-4207-8f36-42ace2c9bd1c" />
 
 
 
