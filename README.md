@@ -8,7 +8,7 @@
 
 ----------------------------
 
-## Problem Statement 
+# Problem Statement 
 
 "Child abductions by strangers" are one of the most dangerous crimes that law enforcement agencies like the FBI investigate. This is because this class of crime comes with it a rapidly shrinking response window:
 
@@ -21,7 +21,7 @@
 -----------------------------
 
 
-## The Nemesis Engine
+# The Nemesis Engine
 
 The Nemesis Engine is primarily a strategic tool. Its a module that allows for an investigation into how law enforcement can be mobilized more effectively across real cities and towns. 
 
@@ -34,7 +34,7 @@ If the seekers can manage to consistently find the hider -  even when the hider 
 
 -------------------------------------------------
 
-## The Build Process
+# The Build Process
 
 The generic build process for this simulation is noted as follows: 
 
@@ -49,6 +49,13 @@ The generic build process for this simulation is noted as follows:
 7. Train Local Policy Function against MCTS derived policies
 
 Steps 5-7 can then be cycled over and over until diminishing returns are had in agent self-improvement.
+
+.
+
+
+.
+
+
 
 ------------------------------------------------------
 
