@@ -140,3 +140,16 @@ Where:
 | `C_{puct}`     | **Exploration constant** for PUCT; controls how much the prior affects exploration. |
 | `\sqrt{N(s)}`  | Square root of total state visits, used to scale the exploration term.     |
 | `1 + N(s, a)`  | Denominator that tempers the influence of `P(s,a)` as an action becomes heavily explored. |
+
+
+The algorithm doesn’t brute-force the tree all the way to terminal states. Instead, it **expands one new node at a time** in the next layer of the search tree. For each expansion, the **value network** estimates the expected reward of that node, and the algorithm **backpropagates** the resulting value and visit counts up the tree.  
+
+This process repeats — **one node at a time** — while the search tree’s visit counts are continuously updated and stored in memory. Once the agent commits to a move, the visit counts are **softmax-normalized** and saved. These normalized counts are later used to **train the policy network**, so that given a raw observation, the network can predict what the MCTS search *would* recommend if it had run its simulations.  
+
+During gameplay, every turn’s **game state, observation vectors, and other relevant metadata** are logged, creating a library of intermediate states.  
+
+When the game concludes, the **final outcome** (win/loss/draw) is appended to each saved state. This “self-play” loop generates rich training data for both networks:  
+- The **policy network** improves at predicting which actions MCTS would favor.  
+- The **value network** gets better at distinguishing promising states from poor ones, helping guide which nodes the search should expand next.  
+
+
