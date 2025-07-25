@@ -207,7 +207,7 @@ Where:
 
 | Symbol            | Definition                                                                 |
 |-------------------|-----------------------------------------------------------------------------|
-| `V_(theta,s)`     | The **scalar value function**, parameterized by model weights `θ`, estimating the expected outcome of state `s`. |
+| `V_(\theta,s)`     | The **scalar value function**, parameterized by model weights `θ`, estimating the expected outcome of state `s`. |
 | `s`               | The **state** (e.g., board configuration, positions of all agents).        |
 | `z`               | The **final game outcome** from the perspective of the current player (e.g., +1 for win, 0 for draw, −1 for loss). |
 | `θ`               | The **model parameters/weights** of the neural network producing the value. |
@@ -229,7 +229,7 @@ Where:
 | Symbol              | Definition                                                                 |
 |---------------------|-----------------------------------------------------------------------------|
 | `𝓛_v`               | The **loss function** for the value head.                                  |
-| `V_(theta,s)`       | Predicted scalar value for state `s`.                                      |
+| `V_(\theta,s)`       | Predicted scalar value for state `s`.                                      |
 | `z`                 | Final game result used as the training label (e.g., +1, 0, or −1).         |
 
 By aligning predictions with outcomes, the network learns to estimate the likely result of a state **without requiring full rollouts**, making the search both faster and more informed.
