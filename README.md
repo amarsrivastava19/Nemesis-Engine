@@ -264,7 +264,7 @@ The neural network we use here is deliberately simple — framed as a regression
 - A value of +1 indicates a state that ultimately resulted in the hider being captured.
   
 ### Example network design
-<img width="1200" height="1000" alt="image" src="https://github.com/user-attachments/assets/dfc7d81c-66dd-4195-95c2-bdcd41b0d3a1" />
+<img width="1000" height="1200" alt="image" src="https://github.com/user-attachments/assets/dfc7d81c-66dd-4195-95c2-bdcd41b0d3a1" />
 
 
 <br>
@@ -414,7 +414,7 @@ The **dot product** (`f_iᵀ · (e_a + g(x_a))`) produces a raw **score** for ea
 
 ### Example Network Diagram
 
-<img width="1200" height="1000" alt="image" src="https://github.com/user-attachments/assets/c4125b0f-3b25-4682-835f-0b4c6f0f7009" />
+<img width="1000" height="1200" alt="image" src="https://github.com/user-attachments/assets/c4125b0f-3b25-4682-835f-0b4c6f0f7009" />
 
 
 
