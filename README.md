@@ -212,15 +212,37 @@ Where:
 | `z`               | The **final game outcome** from the perspective of the current player (e.g., +1 for win, 0 for draw, −1 for loss). |
 | `θ`               | The **model parameters/weights** of the neural network producing the value. |
 
-This differs from a **Q‑function** in classical reinforcement learning, which outputs a value for each **state–action** pair \( Q(s,a) \). The AlphaZero value head instead outputs **one scalar per state** — essentially asking *“How good is this state overall?”* rather than *“How good is this state **if I take this specific action**?”*   
+.
+
+.
+
+
+The global state vector is defined as follows:
+
+| Feature         | Description                                                                 |
+|-----------------|-----------------------------------------------------------------------------|
+| `t`             | Current timestep.                                                           |
+| `H_θ`           | Hider’s **true heading** (absolute, relative to map center, normalized).    |
+| `d_Hav (H,i)`   | Haversine distance between seeker `i` and hider `H`.                        |
+| `d_Road (H,i)`  | Road distance between seeker `i` and hider `H`.                             |
+| `α_(i,θ)`       | Current heading of agent `i` (absolute, relative to map center, normalized).|
+| `β_θ`           | Heading to known victim location (absolute, relative to map center, normalized). |
+| `ω_i`           | Binary indicator: is agent `i` on a high‑priority node (e.g., hiding spot)? |
+| `ω_H`           | Binary indicator: is hider `H` on a high‑priority node (e.g., hiding spot)? |
+| `δ`             | Outcome of the simulation (only known after the fact).                      |
+| `δ_i`           | Current **status** of agent `i` (e.g., `traveling` or `at rest`).           |
+| `t_travel`      | Remaining **travel lock time** for an agent that has committed to a road.   |
+
+.
+
+.
+
 
 The neural network we use here is deliberately simple — framed as a regression model that takes the state vector 𝑠 and outputs a scalar value within (-1, 1).
 
 - A value of -1 indicates a state that ultimately led to the hider evading capture.
 
 - A value of +1 indicates a state that ultimately resulted in the hider being captured.
-
-.
 
 .
 
