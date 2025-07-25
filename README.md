@@ -416,7 +416,7 @@ The **dot product** (`f_iᵀ · (e_a + g(x_a))`) produces a raw **score** for ea
 
 ### Example Network Diagram
 
-<img width="1200" height="1000" alt="image" src="https://github.com/user-attachments/assets/5def0a99-b1fd-4319-b2df-58f439addcc7" />
+<img width="1200" height="1230" alt="image" src="https://github.com/user-attachments/assets/ea10623e-18f3-4182-9ffa-a37dd96679c0" />
 
 
 
