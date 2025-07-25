@@ -75,22 +75,19 @@ Let's examine each piece in isolation.
 
 ### Self-Play through modified Monte Carlo Tree Search
 
-Traditionally, in the context of board games, where two agents take actions in a non-cooperative fashion, we can model the sequence of actions taken by each agent as a graph tree - where each layer contains the choices available to the given agent, and the layer below it represents the choices available to the opposing agent.  Here is a simple example from the game of Tic-Tac-Toe:
+In two-player board games, the sequence of actions taken by each side can be modeled as a game tree, where each layer corresponds to one player’s decisions, and the layer below represents the opponent’s responses. Consider the simple case of Tic-Tac-Toe:
 
 <img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/7c4d391d-bee1-4976-b1b7-7d5a3f5ecfd3" />
 
 
-Observe that when the agent's environment's is small, the problem of "solving" the game becomes tractable. In the case of tic-tac-toe, where there are only so many possible moves, an algorithm could be designed to figure out the optimal move for each agent by simply exploring this tree down to its terminal condition. Algorithms like MinMax have been developed to do just this and have been successfully been applied to board games like chess. 
+When the state space is small, “solving” the game is straightforward: you can explore the entire tree to its terminal nodes and identify the optimal move in every situation. In Tic-Tac-Toe, an algorithm like MinMax can brute-force the entire tree, guaranteeing perfect play.
 
 
 <img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/0ec5207a-3a77-4f31-9189-2df055ebc6db" />
 
+For more complex games like chess, this approach collapses under the weight of combinatorial explosion. The number of possible move sequences grows exponentially with each ply, making it impossible to explore the full tree. Even with heavy pruning and heuristics, MinMax-style engines are typically limited to ~15–20 moves ahead, with 30–40 moves being an upper bound in specialized setups.
 
-However, with games like chess, it becomes intractable to explore the entire tree since the combinations of moves grows exponentially the longer the game goes. As such, even MinMax algorithms typically limit their searches to only look forward ~15-20 moves at a time. Even with modern optimizations and heuristics guiding the search, a 30-40 move lookahead is a practical ceiling. 
-
-
-Monte Carlo Tree Search (MCTS) addresses this challenge for high-cardinality combinatorial spaces by synthesizing best-first search through repeated sampling. While MinMax seeks to explore every possible tree branch, MCTS utilizes an internal tree policy to choose which branches to explore probabilistically. \
-
+Monte Carlo Tree Search (MCTS) addresses this challenge by trading exhaustive exploration for probabilistic sampling. Instead of attempting to evaluate every branch, MCTS uses a tree policy to decide which branches to explore more deeply, balancing moves that look promising with those that haven’t been tried enough yet.
 
 The most common tree policy is the **Upper Confidence Bound for Trees** (UCB1):
 
@@ -110,4 +107,13 @@ Where:
 | `W(s, a)`    | Cumulative sum of rewards obtained after taking `a` from `s` (used to compute `Q`). |
 | `C`          | **Exploration constant** for UCT; balances exploration vs exploitation.     |
 | `\ln N(s)`   | Natural logarithm of state visit count (used in the exploration term).      |
+
+
+This formula has two parts:
+
+- **Exploitation (Q)** : Steers the search toward actions with higher observed rewards.
+- **Exploration** : The square-root term biases the search toward under-visited moves to gather more information.
+  
+Early in the search, the exploration term dominates, ensuring a wide sampling of possibilities. As the tree fills out, the exploitation term becomes more precise, and exploration pressure naturally fades — allowing the algorithm to focus on the most promising branches.
+
 
