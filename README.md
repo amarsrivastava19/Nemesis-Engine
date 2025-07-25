@@ -60,6 +60,8 @@ The digital twin is created through using the OSM Overpass API to query road net
 
 Network objects work well for this project as new data can be quickly integrated into the environment by simply associated any new data point with the nearest node on the graph. Thus, we can scale our model's complexity infinitely so long as the data points are spatially cast. 
 
+Implementation details regarding the build process can be found in **Nemesis-Engine/scripts/Build the Digital Twin/Building the Digital Twin.ipynb**.
+
 <br><br>
 
 ------------------------------------------------------
