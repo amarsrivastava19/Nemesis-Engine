@@ -403,10 +403,7 @@ Thus the policy function is defined as follows-
 ```
 **For each agent *i* in the agent set.**
 
-
-.
-
-Where:
+We have:
 
 | Symbol    | Description                                                   |
 |-----------|---------------------------------------------------------------|
@@ -415,3 +412,6 @@ Where:
 | `g(x_a)`  | Projection of static features for edge *a*.                   |
 
 The **dot product** (`f_iᵀ · (e_a + g(x_a))`) produces a raw **score** for each edge, which is then normalized via **softmax** into a probability distribution over the valid actions for that seeker.
+
+
+
