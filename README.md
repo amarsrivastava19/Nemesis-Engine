@@ -399,11 +399,10 @@ Thus the policy function is defined as follows-
 
 
 ```math
-π_i(a | s) = softmax( f_iᵀ ( e_a + g(x_a) ) )
+π_i(a | s) = softmax( f_iᵀ · ( e_a + g(x_a) ) )
 ```
-<cr>
-For each agent *i* in agent collection.
-</cr>
+**For each agent *i* in the agent set.**
+
 
 .
 
