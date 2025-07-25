@@ -252,9 +252,9 @@ Where:
 
 By aligning predictions with outcomes, the network learns to estimate the likely result of a state **without requiring full rollouts**, making the search both faster and more informed.
 
-### Game State Vector
+### State Vector
 
-The global game state vector is given as follows: 
+The global state vector is given as follows: 
 
 
 ```math
