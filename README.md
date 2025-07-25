@@ -116,4 +116,27 @@ This formula has two parts:
   
 Early in the search, the exploration term dominates, ensuring a wide sampling of possibilities. As the tree fills out, the exploitation term becomes more precise, and exploration pressure naturally fades — allowing the algorithm to focus on the most promising branches.
 
+Deepmind's seminal work with AlphaZero and AlphaZeroGo adapted this tree policy to include deep neural network functions - so that just given a board state and individual observations for an agent, the tree policy can be estimated without the need for doing penetrative rollouts down the tree and backpropogation of values to update the MCTS policies. The two networks represents a sort of knowledge base that an agent can rely on to intuit which moves likely lead to the best rewards. 
 
+This policy, termed **Predictor + Upper Confidence Bound** (PUCT) is defined as follows:
+
+
+```math
+a^* = \arg\max_a \left[ Q(s, a) + C_{puct} \cdot P(s, a) \frac{\sqrt{N(s)}}{1 + N(s, a)} \right]
+```
+
+
+Where: 
+
+
+| Symbol         | Definition                                                                 |
+|----------------|-----------------------------------------------------------------------------|
+| `a`            | Candidate action from the current state `s`.                               |
+| `a^*`          | Action selected by the search policy (argmax output).                      |
+| `Q(s, a)`      | **Empirical mean return** for action `a` in state `s`, updated through backpropagation. |
+| `N(s)`         | Number of times state `s` has been visited.                                 |
+| `N(s, a)`      | Number of times action `a` has been taken from state `s`.                   |
+| `P(s, a)`      | **Policy prior** from the neural network; predicts which moves are promising. |
+| `C_{puct}`     | **Exploration constant** for PUCT; controls how much the prior affects exploration. |
+| `\sqrt{N(s)}`  | Square root of total state visits, used to scale the exploration term.     |
+| `1 + N(s, a)`  | Denominator that tempers the influence of `P(s,a)` as an action becomes heavily explored. |
