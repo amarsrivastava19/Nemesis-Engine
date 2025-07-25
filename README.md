@@ -215,13 +215,7 @@ Where:
 .
 
 
-The global state vector 
-
-```math
-s
-```
-
-is defined as follows-
+The global state vector, **s**,  is defined as follows-
 
 | Feature         | Description                                                                 |
 |-----------------|-----------------------------------------------------------------------------|
@@ -261,18 +255,26 @@ Later on, inputting the environment itself as a gridded map may be a valuable mo
 
 ### Learning Objective
 
-The value head is trained to match the **final game outcome** from self‑play:
+The value head is trained to match the **final game outcome** from self‑play, **with an added proximity bonus** to encourage seekers to move closer to the hider (and penalize the hider for being approached).  
+
+We modify the objective to incorporate this additional shaping term:
 
 ```math
-\mathcal{L}_v = (V_\theta(s) - z)^2
+\mathcal{L}_v = (V_\theta(s) - (z + \lambda p(s)))^2
 ```
 
 Where:
 
-| Symbol              | Definition                                                                 |
-|---------------------|-----------------------------------------------------------------------------|
-| `𝓛_v`               | The **loss function** for the value head.                                  |
-| `V(θ,s)`       | Predicted scalar value for state `s`.                                      |
-| `z`                 | Final game result used as the training label (e.g., +1, 0, or −1).         |
+| Symbol        | Definition                                                                 |
+|---------------|-----------------------------------------------------------------------------|
+| `𝓛_v`         | The **loss function** for the value head.                                  |
+| `V_θ(s)`      | Predicted scalar value for state `s`.                                      |
+| `z`           | Final game result used as the training label (e.g., +1, 0, or −1).         |
+| `p(s)`        | **Proximity bonus function**: a shaped reward based on how close seekers are to the hider (positive for seekers, negative for the hider). |
+| `λ`           | Weighting coefficient controlling the influence of the proximity bonus on learning. |
 
-By aligning predictions with outcomes, the network learns to estimate the likely result of a state **without requiring full rollouts**, making the search both faster and more informed.
+The **proximity bonus** provides denser feedback:  
+- **Seekers** earn a small positive shaping reward as they close distance to the hider.  
+- **The hider** is penalized when seekers get too close, incentivizing evasive movement.  
+
+By blending the game outcome `z` with the shaped proximity term `λ p(s)`, the network learns not only from the final win/loss signal but also from meaningful **intermediate progress**. This helps the value function converge faster and supports deeper planning without requiring exhaustive rollouts.
