@@ -368,11 +368,21 @@ By summing these two representations, the model creates an **enriched edge embed
 
 The other half of the pointer policy relies on the observation vector - a collection of measures from the environment that is known and observable to a given agent. 
 
+.
+
+
+.
+
+
+
  The **observation vector**  is noted as follows:
 
 ```math
 \vec{o}_{t,i}
 ```
+
+.
+
 
 This vector is defined for each agent *i* at timestep *t* and is composed of the following attributes:
 
