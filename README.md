@@ -124,9 +124,7 @@ Early in the search, the exploration term dominates, ensuring a wide sampling of
 
 <img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/7f6a9fb2-b322-469a-8fd2-9a2e5a6f1f79" />
 
-.
-
-.
+### Modified MCTS with Deep Network trained PUCT policy 
 
 Deepmind's seminal work with *AlphaZero* and *AlphaGo Zero* adapted this tree policy to include deep neural network functions - so that just given a board state and individual observations for an agent, the tree policy can be estimated without the need for doing exhaustive rollouts down the tree and backpropogation of values to update the MCTS policies. The two networks represent a sort of knowledge base that an agent can rely on to intuit which moves likely lead to the best rewards. 
 
