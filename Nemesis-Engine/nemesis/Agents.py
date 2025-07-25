@@ -15,9 +15,12 @@ class Agent():
         self.Node = ""
         self.heading = 0
         self.timestep = 0
-        self.isOnHidingSpot = False
+        self.isOnHidingSpot = False 
         self.G = G
-    
+        self.status = 'at_node'  # Can be 'at_node' or 'traveling'
+        self.destination_node = None
+        self.time_to_arrival = 0
+
     def CalculateNormalizedHeading(self):
 
         lat_mid,lon_mid = FindCentroid(self.G)
@@ -57,14 +60,6 @@ class Agent():
         distance = R * c
         return distance
     
-    # def RoadDistance(self, target_id):
-    #     path_length = nx.shortest_path_length(
-    #         self.G,
-    #         source=self.Node,
-    #         target=target_id,
-    #         weight='Distance_miles'
-    #     )
-    #     return path_length    
     def RoadDistance(self, precomputed_paths, v):
         return precomputed_paths[self.Node][v]
 
@@ -91,6 +86,9 @@ class Seeker(Agent):
         new.nearbyTeammates = self.nearbyTeammates
         new.hav_DistanceToTeam = list(self.hav_DistanceToTeam)
         new.road_DistanceToTeam = list(self.road_DistanceToTeam)
+        new.status = self.status
+        new.destination_node = self.destination_node
+        new.time_to_arrival = self.time_to_arrival
         return new
 
 
@@ -104,9 +102,11 @@ class Seeker(Agent):
         D_hav = self.hav_DistanceToLastSeen
         D_road = self.road_DistanceToLastSeen
         omega = int(self.isOnHidingSpot)
-        
-        obs_i = [timestep, n, alpha, beta, D_hav, D_road, omega] + d_hav + d_road
-        obs_i = np.array(obs_i)  # shape (17,)
+        is_traveling = 1 if self.status == 'traveling' else 0
+        time_left = self.time_to_arrival
+
+        obs_i = [timestep, n, alpha, beta, D_hav, D_road, omega, is_traveling, time_left] + d_hav + d_road
+        obs_i = np.array(obs_i)  # shape (19,)
         #obs_i = np.expand_dims(obs_i, axis=0) 
         return obs_i
         
@@ -121,6 +121,9 @@ class Hider(Agent):
         new.heading = self.heading
         new.timestep = self.timestep
         new.isOnHidingSpot = self.isOnHidingSpot
+        new.status = self.status
+        new.destination_node = self.destination_node
+        new.time_to_arrival = self.time_to_arrival
         return new
 
 

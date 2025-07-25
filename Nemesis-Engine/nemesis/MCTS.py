@@ -2,7 +2,7 @@
 import numpy as np
 import tensorflow as tf
 import random
-
+from tqdm import tqdm
 
 
 class MCTSNode:
@@ -10,22 +10,72 @@ class MCTSNode:
         self.state = state                # full env state (time, positions, hider, etc.)
         self.seekers = seekers  # [node_id_1, node_id_2, ..., node_id_5]
         self.parent = parent
-    
         self.children = {}  # key: joint_action_tuple → MCTSNode
-    
+        self.per_agent_visit_counts = [{} for _ in range(5)]
         self.P = {}  # priors for each joint action: P[(a1,a2,a3,a4,a5)]
         self.N = {}  # visit counts
         self.W = {}  # total value sum
         self.Q = {}  # mean value = W / N
     
         self.is_terminal = False
-    
 
+    def get_training_policy(self, node_to_edges):
+        """
+        Generates a complete and correctly normalized policy distribution over all
+        legal moves for each agent.
+    
+        Args:
+            node_to_edges (dict): The global map from a node ID to its legal edge IDs.
+
+        Returns:
+            list[dict]: A list of policy dictionaries, one for each agent.
+        """
+        per_agent_policies = []
+
+        # For each seeker agent in this node's state
+        for i, seeker in enumerate(self.seekers):
+            # 1. Get all raw visit counts and the definitive list of legal moves.
+            all_agent_counts = self.per_agent_visit_counts[i]
+            legal_moves = node_to_edges.get(seeker.Node, [])
+
+            # 2. CRITICAL FIX: Filter the counts to include ONLY legal moves.
+            # This prevents illegal/polluted actions from affecting the normalization.
+            legal_counts = {move: all_agent_counts.get(move, 0) for move in legal_moves}
+
+            # 3. Sum the visits of ONLY the legal moves. This is the correct normalization factor.
+            total_legal_visits = sum(legal_counts.values())
+
+            policy_for_agent = {}
+            if total_legal_visits > 0:
+                # 4. Normalize using the sum of legal visits to ensure probabilities sum to 1.
+                for move, count in legal_counts.items():
+                    policy_for_agent[move] = count / total_legal_visits
+            else:
+                # Fallback to a uniform policy if no legal moves were ever visited.
+                num_legal_moves = len(legal_moves)
+                if num_legal_moves > 0:
+                    prob = 1.0 / num_legal_moves
+                    for move in legal_moves:
+                        policy_for_agent[move] = prob
+        
+            per_agent_policies.append(policy_for_agent)
+            
+        return per_agent_policies
+    
+    # def update(self, joint_action, V):
+    #     self.N[joint_action] += 1
+    #     self.W[joint_action] += V
+    #     self.Q[joint_action] = self.W[joint_action] / self.N[joint_action]
     def update(self, joint_action, V):
+        if joint_action not in self.N:
+            self.N[joint_action] = 0
+            self.W[joint_action] = 0.0
+            self.Q[joint_action] = 0.0
+            
         self.N[joint_action] += 1
         self.W[joint_action] += V
         self.Q[joint_action] = self.W[joint_action] / self.N[joint_action]
-    
+        
     def expand_one_child(self, pointer_policies, edge_static_features, node_to_edges):
         """
         Samples ONE joint action based on policy priors, creates that child node,
@@ -35,9 +85,21 @@ class MCTSNode:
         valid_edge_sets = []
         all_local_obs = []
 
+        def get_legal_actions_for_agent(agent, node_to_edges):
+            """Determines the action space for a single agent."""
+            if agent.status == 'traveling':
+                # This agent cannot choose a new path. Its only "action"
+                # is to continue. We use a special value to represent this.
+                return [-1]  # Represents "continue_travel"
+
+            elif agent.status == 'at_node':
+                # This agent is free to choose any outgoing edge.
+                return node_to_edges.get(agent.Node, [])
+
         # Get priors for each agent (replace with your actual policy network call)
         for i, seeker in enumerate(self.seekers):
-            valid_edges = tf.constant(node_to_edges[seeker.Node], dtype=tf.int32)
+            valid_edges = get_legal_actions_for_agent(seeker, node_to_edges)
+            valid_edges = tf.constant(valid_edges, dtype=tf.int32)
             local_obs = seeker.BuildObservationVector()
         
             # NOTE: This should be your policy network's output
@@ -59,8 +121,10 @@ class MCTSNode:
             action_edge = valid_edge_sets[agent_idx][sampled_idx]
         
             # Store the actual edge ID for simulation
-            action_node_id = str(self.state.edgeIDHash[action_edge.numpy()][1])
-            joint_action.append(action_node_id)
+            # action_node_id = str(environment.edgeIDHash[action_edge.numpy()][1])
+            # joint_action.append(action_node_id)
+            edge_id = int(action_edge.numpy())  # Just use the raw edge ID
+            joint_action.append(edge_id)
         
             # Store the prior for the chosen action
             joint_action_priors.append(p[sampled_idx])
@@ -84,58 +148,6 @@ class MCTSNode:
         self.children[joint_action] = child_node
     
         return child_node
-    # def expand(self, pointer_policies, edge_static_features, node_to_edges, critic):
-    #     priors = []
-    #     valid_edge_sets = [] 
-    #     all_local_obs = []
-    #     all_valid_edges = []
-    #     for i, seeker in enumerate(self.seekers):
-    #         valid_edges = tf.constant(node_to_edges[seeker.Node], dtype=tf.int32)
-    #         local_obs = seeker.BuildObservationVector()  # 9 features
-    #         valid_edge_sets.append(valid_edges)
-    #         all_local_obs.append(local_obs)
-    #         all_valid_edges.append(valid_edges)
-
-    #     priors_per_seeker = []
-    #     for valid_edges in valid_edge_sets:
-    #         n = len(valid_edges)
-    #         priors_per_seeker.append(np.ones(n) / n)
-    #     # probs = [i.numpy().flatten() for i in pointer_policies(
-    #     #     np.stack(all_local_obs), all_valid_edges, edge_static_features
-    #     # )]
-    #     #print(probs)
-
-    #     priors = priors_per_seeker
-
-    
-    #     joint_action = []
-        
-    #     for agent_idx in range(len(valid_edge_sets)):
-    #         sampled_idx = np.random.choice(len(valid_edge_sets[agent_idx]), p=priors[agent_idx])
-    #         # print(priors[agent_idx])
-    #         # print(valid_edge_sets[agent_idx])
-    #         action = valid_edge_sets[agent_idx][sampled_idx]
-    #         #print(action)
-    #         joint_action.append(str(self.state.edgeIDHash[action.numpy()][1]))
- 
-    #         #print(self.state.edgeIDHash[action.numpy()][1])
-    
-    #     joint_action = tuple(joint_action)
-
-    #     #V = critic.call(self.state.BuildStateVector()).numpy()[0][0]
-    #     V = 0
-    #     self.P[joint_action] = tuple(priors)
-    #     self.W[joint_action] = 0.0
-    #     self.N[joint_action] = 0
-    #     self.Q[joint_action] = 0.0
-    #     child_state = self.state.simulate_joint_action(joint_action)
-    #     child_node = MCTSNode(child_state, child_state.seekers, parent=self)
-    #     self.children[joint_action] = child_node
-    #     #print(self.children[joint_action])
-    #     #print(f"Expanded joint_action: {joint_action}")
-    #     #print(f"Children so far: {list(self.children.keys())}")
-    #     print(self.N)
-    #     return child_node, V, joint_action
 
 
 
@@ -149,23 +161,34 @@ class MCTSSearch:
         self.c_puct = c_puct
     
     def run(self, num_simulations, exploration_epsilon=0.25):
-        for i,_ in enumerate(range(num_simulations)):
-            if i % 100 == 0:
-                print(f"Starting Simulation #{i}")
+        for i,_ in tqdm(enumerate(range(num_simulations))):
+            # if i % 100 == 0:
+            #     print(f"Starting Simulation #{i}")
             path = []
             node = self.root
 
             # 1. Traversal (Selection + Forced Expansion)
             while not self.is_terminal(node):
-                
-                # If a node is a leaf (has no children), we must expand it.
                 if not node.children:
+                    # This is a leaf node we are about to expand for the FIRST time.
+                    # Initialize all per-agent legal action counts to 0 here.
+                    for i, seeker in enumerate(node.seekers):
+                        valid_edges = self.node_to_edges[seeker.Node]
+                        for edge in valid_edges:
+                            # Ensure every legal action has a default count of 0.
+                            if edge not in node.per_agent_visit_counts[i]:
+                                 node.per_agent_visit_counts[i][edge] = 0
                     break # Exit traversal to expand this leaf node
 
-                # Epsilon-greedy exploration:
-                # With a small probability, we force expansion even if children exist.
-                # This is the key to widening the tree.
                 if random.random() < exploration_epsilon:
+                    # This is a previously expanded node, but we are widening it.
+                    # We need to ensure all legal actions are initialized here too.
+                    # This check is fast and handles all cases.
+                    if not any(node.per_agent_visit_counts): # Check if it's uninitialized
+                        for i, seeker in enumerate(node.seekers):
+                            valid_edges = self.node_to_edges[seeker.Node]
+                            for edge in valid_edges:
+                                node.per_agent_visit_counts[i][edge] = 0
                     break # Exit traversal to expand this node and widen the tree
 
                 # Otherwise, select the best child using PUCT and continue down
@@ -187,8 +210,8 @@ class MCTSSearch:
                 )
                 
                 # Evaluate the NEW node with the critic
-                # V = self.critic.call(new_child_node.state.BuildStateVector()).numpy()[0][0]
-                V = 0.0 # Placeholder
+                V = self.critic.call(new_child_node.state.BuildStateVector()).numpy()[0][0]
+                #V = 0.0 # Placeholder
                 
                 # Add the final step to the path for backpropagation
                 # The action taken from `node` is the one that created `new_child_node`
@@ -197,39 +220,23 @@ class MCTSSearch:
                 path.append((node, new_action))
 
             # 4. Backpropagation
-            for n, action in reversed(path):
-                n.update(action, V)
-    # def run(self, num_simulations):
-    #         for i,_ in enumerate(range(num_simulations)):
-    #             #print(f"Starting run {i}")
-    #             path = []
-    #             node = self.root
-    #             joint_action = []
-    #             while not self.is_terminal(node):
-    #                 for seeker in node.seekers:
-    #                     valid_edges = self.node_to_edges[seeker.Node]
-    #                     joint_action.append(random.choice(valid_edges))
-    #                 joint_action = tuple(joint_action)
-    #                 node.children[joint_action] = None
-    #                 joint_action = self.select(node)
-    #                 path.append((node, joint_action) )
-    #                 node = node.children[joint_action]
+            for node_on_path, action_taken in reversed(path):
+                # Update the joint action value statistics
+                node_on_path.update(action_taken, V)
 
-    #                 # If you expanded:
-    #                 if not self.is_terminal(node):
-    #                     child, V , joint_action = node.expand(self.pointer_policies,
-    #                                             self.edge_static_features,
-    #                                             self.node_to_edges,
-    #                                             self.critic)
-    #                     # Store expansion action too:
-    #                     node.children[joint_action] = child
-    #                     path.append( (node, joint_action) )
-    #                 else:
-    #                     V = self.reward(node)
-
-    #             # Now backprop:
-    #             for n, action in reversed(path):
-    #                 n.update(action, V)
+                # ALSO, update the per-agent policy visit counts for this node
+                for agent_idx, individual_action in enumerate(action_taken):
+                    # Get the dictionary of counts for the current agent
+                    counts_dict = node_on_path.per_agent_visit_counts[agent_idx]
+        
+                    # Robustly increment the count for the specific action taken
+                    # If the key doesn't exist, .get() returns 0, so the new value becomes 1.
+                    counts_dict[individual_action] = counts_dict.get(individual_action, 0) + 1
+                        # NEW: update per-agent counts
+                    # for i, a_i in enumerate(action):
+                    #     if a_i not in n.per_agent_visit_counts[i]:
+                    #         n.per_agent_visit_counts[i][a_i] = 0
+                    #     n.per_agent_visit_counts[i][a_i] += 1
 
     def select(self, node):
         N_total = sum(node.N.values())
@@ -253,32 +260,10 @@ class MCTSSearch:
                 best_action = action
                 
         return best_action
-    # def select(self, node):
-    #     N_total = sum(node.N.values()) + 1e-8
-    #     best_score = -float('inf')
-    #     best_action = None
-
-    #     for action in node.children:
-    #         #print(action)
-    #         Q = node.Q[action]
-    #         #print(Q)
-    #         P = np.mean([np.mean(p) for p in node.P[action]])  # avg local priors
-    #         #print(P)
-    #         N_action = node.N[action]
-    #         #print(N_action)
-    #         #print(V)
-
-    #         U = Q + self.c_puct * P * np.sqrt(N_total) / (1 + N_action)
-
-    #         if U > best_score:
-    #             best_score = U
-    #             best_action = action
-
-    #     return best_action
 
     def is_terminal(self, node):
         return (
-            node.state.timestep >= 30
+            node.state.timestep >= 120
             or any(seeker.Node == node.state.hider.Node for seeker in node.state.seekers)
         )
 
