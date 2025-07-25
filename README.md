@@ -264,7 +264,8 @@ The neural network we use here is deliberately simple — framed as a regression
 - A value of +1 indicates a state that ultimately resulted in the hider being captured.
 - 
 ### Example network design
-<img width="1200" height="1000" alt="Blank diagram - Page 1 (1)" src="https://github.com/user-attachments/assets/424e37e6-5034-41de-bcfe-91f8aa8e3fb8" />
+<img width="1200" height="1000" alt="image" src="https://github.com/user-attachments/assets/dfc7d81c-66dd-4195-95c2-bdcd41b0d3a1" />
+
 
 <br>
 
