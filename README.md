@@ -293,7 +293,7 @@ The **proximity bonus** provides denser feedback:
 - **The hider** is penalized when seekers get too close, incentivizing evasive movement.  
 
 By blending the game outcome `z` with the shaped proximity term `λ p(s)`, the network learns not only from the final win/loss signal but also from meaningful **intermediate progress**. This helps the value function converge faster and supports deeper planning without requiring exhaustive rollouts.
-
+<br><br>
 
 ### Example network design
 <img width="1200" height="1000" alt="Blank diagram - Page 1 (1)" src="https://github.com/user-attachments/assets/424e37e6-5034-41de-bcfe-91f8aa8e3fb8" />
