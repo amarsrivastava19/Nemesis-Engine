@@ -256,6 +256,7 @@ The global state vector, **s**,  is defined as follows-
 
 
 <br>
+<br>
 
 The neural network we use here is deliberately simple — framed as a regression model that takes the state vector 𝑠 and outputs a scalar value within (-1, 1).
 
@@ -267,6 +268,7 @@ The neural network we use here is deliberately simple — framed as a regression
 <img width="1000" height="1200" alt="image" src="https://github.com/user-attachments/assets/dfc7d81c-66dd-4195-95c2-bdcd41b0d3a1" />
 
 
+<br>
 <br>
 
 ---
@@ -416,5 +418,7 @@ The **dot product** (`f_iᵀ · (e_a + g(x_a))`) produces a raw **score** for ea
 
 <img width="1000" height="1200" alt="image" src="https://github.com/user-attachments/assets/c4125b0f-3b25-4682-835f-0b4c6f0f7009" />
 
+<br>
+<br>
 
 
