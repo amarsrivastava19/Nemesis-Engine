@@ -36,6 +36,8 @@ If the seekers can manage to consistently find the hider -  even when the hider 
 
 # The Build Process
 
+<img width="682" height="596" alt="image" src="https://github.com/user-attachments/assets/5c8b16e8-50cf-4857-bc7c-2f67bd98837e" />
+
 The generic build process for this simulation is noted as follows: 
 
 1. Build a "digital twin" of a geographic region
