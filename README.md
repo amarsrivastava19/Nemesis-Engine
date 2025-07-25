@@ -1,4 +1,4 @@
-# Nemesis-Engine
+a# Nemesis-Engine
 #### Modeling rapid response to child abductions using multi-agent adversarial networks with Reinforcement Learning. 
 
 ![animation-ezgif com-resize](https://github.com/user-attachments/assets/d29810d4-77b8-4986-9c04-c72f8be14ed0) 
@@ -401,9 +401,9 @@ Thus the policy function is defined as follows-
 ```math
 π_i(a | s) = softmax( f_iᵀ ( e_a + g(x_a) ) )
 ```
-```
+<cr>
 For each agent *i* in agent collection.
-```
+</cr>
 
 .
 
