@@ -153,12 +153,21 @@ This formula has two parts:
   
 Early in the search, the exploration term dominates, ensuring a wide sampling of possibilities. As the tree fills out, the exploitation term becomes more precise, and exploration pressure naturally fades — allowing the algorithm to focus on the most promising branches.
 
-
+#### Simple Summary of MCTS Steps
 <img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/7f6a9fb2-b322-469a-8fd2-9a2e5a6f1f79" />
+<br>
 
-<br><br>
+1. Agent has multiple choices in front of it
+2. UCB determines which choice it should explore
+3. Agent examines game state with UCB selection
+4. Agent plays random moves until it reaches the end of the game or it hits its max move limit
+5. The results of the play is back propogated up the tree. Each node's visit count is updated, and if the play resulted to a win or loss the "reward" of the nodes are updated in accordance.
+6. UCB is updated with new values
+7. Agent repeats from step 2 and continues until it hits the max simulation limit
+8. After simulation is over, Agent chooses the next action to move based on UCB and modifies the game state in the physical/virtual world.
 
-
+<br>
+<br>
 
 
 ### Modified MCTS with Deep Network trained PUCT policy 
