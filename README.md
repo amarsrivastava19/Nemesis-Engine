@@ -234,3 +234,27 @@ Where:
 
 By aligning predictions with outcomes, the network learns to estimate the likely result of a state **without requiring full rollouts**, making the search both faster and more informed.
 
+### Game State Vector
+
+The global game state vector is given as follows: 
+
+
+```math
+s
+```
+
+The following features make up this vector:
+
+| Feature         | Description                                                                 |
+|-----------------|-----------------------------------------------------------------------------|
+| `t`             | Current timestep.                                                           |
+| `H_θ`           | Hider’s **true heading** (absolute, relative to map center, normalized).    |
+| `d_Hav (H,i)`   | Haversine distance between seeker `i` and hider `H`.                        |
+| `d_Road (H,i)`  | Road distance between seeker `i` and hider `H`.                             |
+| `α_(i,θ)`       | Current heading of agent `i` (absolute, relative to map center, normalized).|
+| `β_θ`           | Heading to known victim location (absolute, relative to map center, normalized). |
+| `ω_i`           | Binary indicator: is agent `i` on a high‑priority node (e.g., hiding spot)? |
+| `ω_H`           | Binary indicator: is hider `H` on a high‑priority node (e.g., hiding spot)? |
+| `δ`             | Outcome of the simulation (only known after the fact).                      |
+| `δ_i`           | Current **status** of agent `i` (e.g., `traveling` or `at rest`).           |
+| `t_travel`      | Remaining **travel lock time** for an agent that has committed to a road.   |
