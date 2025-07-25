@@ -214,10 +214,14 @@ Where:
 
 .
 
-.
 
+The global state vector 
 
-The global state vector is defined as follows:
+```math
+s
+```
+
+is defined as follows-
 
 | Feature         | Description                                                                 |
 |-----------------|-----------------------------------------------------------------------------|
@@ -233,7 +237,6 @@ The global state vector is defined as follows:
 | `δ_i`           | Current **status** of agent `i` (e.g., `traveling` or `at rest`).           |
 | `t_travel`      | Remaining **travel lock time** for an agent that has committed to a road.   |
 
-.
 
 .
 
