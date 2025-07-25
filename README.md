@@ -164,3 +164,25 @@ When the game concludes, the **final outcome** (win/loss/draw) is appended to ea
 - The **value network** gets better at distinguishing promising states from poor ones, helping guide which nodes the search should expand next.  
 
 
+## Modified MCTS for Abduction Simulations
+
+
+This **neural network–assisted MCTS** is a natural fit for abduction simulations because the search space is massive. Even a *low-resolution* road network of the Des Moines metro area contains roughly **32,000 possible edges**, each representing an action that a hider or seeker might take. Move to a *high-resolution* network — one that includes residential streets, alleyways, and undeveloped roads — and that number can easily exceed **100,000**.
+
+Fortunately, we’re somewhat insulated from this overwhelming branching factor by the reality that, at any given moment, an agent typically has only **1–5 viable actions** (roads or paths it can take from its current zone). But unlike chess — a one‑on‑one game — these simulations involve a **team game dynamic**: **five seekers** are tasked with locating **one hider**.
+
+This team aspect changes the math of the search entirely. MCTS now needs to consider the **joint actions** of all seekers at each step. For example:  
+- If **Agent A** takes Road X and **Agent B** takes Road Y, that’s one unique branch in the tree.  
+- If **Agent A** instead takes Road Z while **Agent B** still takes Road Y, that’s a *different* branch.  
+
+Every distinct combination of actions must be accounted for — and the tree expands accordingly.
+
+
+
+
+
+
+
+
+Ask ChatGPT
+
