@@ -57,13 +57,13 @@ The generic build process for this simulation is noted as follows:
 
 Steps 5-7 can then be cycled over and over until diminishing returns are had in agent self-improvement.
 
-<br>
-
+<br><br>
 
 The digital twin is created through using the OSM Overpass API to query road networks (at whatever resolutution or granularity - major, primary, and secondary motorways were chosen for this project). We can then extract the nodes and edges from this network graph and use that as the foundation for our model's environment. 
 
 Network objects work well for this project as new data can be quickly integrated into the environment by simply associated any new data point with the nearest node on the graph. Thus, we can scale our model's complexity infinitely so long as the data points are spatially cast. 
 
+<br><br>
 
 ------------------------------------------------------
 
@@ -96,17 +96,19 @@ Let's examine each piece in isolation.
 In two-player board games, the sequence of actions taken by each side can be modeled as a game tree, where each layer corresponds to one player’s decisions, and the layer below represents the opponent’s responses.
 
 Here is this tree visualized for the simple case of Tic-Tac-Toe:
+<br>
+
 
 <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/7c4d391d-bee1-4976-b1b7-7d5a3f5ecfd3" />
 
-<br>
-
+<br><br>
 
 When the state space is small, “solving” the game is straightforward: you can explore the entire tree to its terminal nodes and identify the optimal move in every situation. In Tic-Tac-Toe, an algorithm like MinMax can brute-force the entire tree, guaranteeing perfect play.
 
 For more complex games like chess, this approach collapses under the weight of combinatorial explosion. The number of possible move sequences grows exponentially with each ply, making it impossible to explore the full tree. Even with heavy pruning and heuristics, MinMax-style engines are typically limited to ~15–20 moves ahead, with 30–40 moves being an upper bound in specialized setups.
 
-<br>
+<br><br>
+
 
 <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/0ec5207a-3a77-4f31-9189-2df055ebc6db" />
 
@@ -294,7 +296,7 @@ By blending the game outcome `z` with the shaped proximity term `λ p(s)`, the n
 
 
 ### Example network design
-<img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/51b56b51-8b32-4930-94d7-31ae2ac0cc31" />
+<img width="3000" height="1247" alt="Blank diagram - Page 1 (1)" src="https://github.com/user-attachments/assets/424e37e6-5034-41de-bcfe-91f8aa8e3fb8" />
 
 <br>
 
@@ -408,6 +410,11 @@ We have:
 | `g(x_a)`  | Projection of static features for edge *a*.                   |
 
 The **dot product** (`f_iᵀ · (e_a + g(x_a))`) produces a raw **score** for each edge, which is then normalized via **softmax** into a probability distribution over the valid actions for that seeker.
+
+
+### Example Network Diagram
+
+
 
 
 
