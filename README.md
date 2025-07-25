@@ -195,7 +195,7 @@ Beyond these modifications, the **MCTS framework fits our abduction simulation n
 
 .
 
-
+------------------------------
 
 ## Value Function V(θ,s)
 
@@ -280,6 +280,13 @@ By blending the game outcome `z` with the shaped proximity term `λ p(s)`, the n
 Later on, inputting the environment itself as a gridded map may be a valuable modification to this function. AlphaZero used multiple convolutional networks to analyze the gridded boards of either Chess or Go, where precense of pieces on a grid were represented by 1s or 0s for a given vector. We avoid this right now, since given that the victory conditions for us, a seeker finding a hider, is far less complex than the movement and capture dynamics of chess. A "blind" analysis of our enivornment should be sufficient.  
 
 
+.
+
+
+.
+
+
+------------------------------
 
 ## Policy Function π(θ,u,Ω)
 
