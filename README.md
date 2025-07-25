@@ -212,7 +212,25 @@ Where:
 | `z`               | The **final game outcome** from the perspective of the current player (e.g., +1 for win, 0 for draw, −1 for loss). |
 | `θ`               | The **model parameters/weights** of the neural network producing the value. |
 
-This differs from a **Q‑function** in classical reinforcement learning, which outputs a value for each **state–action** pair \( Q(s,a) \). The AlphaZero value head instead outputs **one scalar per state** — essentially asking *“How good is this state overall?”* rather than *“How good is this state **if I take this specific action**?”*  
+This differs from a **Q‑function** in classical reinforcement learning, which outputs a value for each **state–action** pair \( Q(s,a) \). The AlphaZero value head instead outputs **one scalar per state** — essentially asking *“How good is this state overall?”* rather than *“How good is this state **if I take this specific action**?”*   
+
+The neural network we use here is deliberately simple — framed as a regression model that takes the state vector 𝑠 and outputs a scalar value within (-1, 1).
+
+- A value of -1 indicates a state that ultimately led to the hider evading capture.
+
+- A value of +1 indicates a state that ultimately resulted in the hider being captured.
+
+.
+
+.
+
+
+Example network design: 
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/51b56b51-8b32-4930-94d7-31ae2ac0cc31" />
+
+
+Later on, inputting the environment itself as a gridded map may be a valuable modification to this function. AlphaZero used multiple convolutional networks to analyze the gridded boards of either Chess or Go, where precense of pieces on a grid were represented by 1s or 0s for a given vector. We avoid this right now, since given that the victory conditions for us, a seeker finding a hider, is far less complex than the movement and capture dynamics of chess. A "blind" analysis of our enivornment should be sufficient.  
+
 
 ---
 
