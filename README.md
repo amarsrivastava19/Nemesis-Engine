@@ -4,13 +4,13 @@
 ![animation-ezgif com-resize](https://github.com/user-attachments/assets/d29810d4-77b8-4986-9c04-c72f8be14ed0) 
 
 
-
+<br>
 ----------------------------
 
 # Problem Statement 
 
 "Child abductions by strangers" are one of the most dangerous crimes that law enforcement agencies like the FBI investigate. This is because this class of crime comes with it a rapidly shrinking response window:
-
+<br>
 **First responders typically have around 90 minutes to ascertain where an abductor and victim might be.**
 
 **They then have another 90 minutes to carry out a rescue attempt.**
@@ -36,14 +36,12 @@ If the seekers can manage to consistently find the hider -  even when the hider 
 <br><br>
 
 
-
-
 -------------------------------------------------
 
 # The Simulation Build Protocol
 
 The generic build process for this simulation is noted as follows: 
-
+<br>
 1. Build a "digital twin" of a geographic region
 2. Develop a way to place agents dynamically in the environment.
 3. Construct a global value function (Critic or Q-function)
