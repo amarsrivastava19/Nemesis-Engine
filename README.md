@@ -188,8 +188,13 @@ This means we dynamically adjust the **“legal moves”** available to an agent
 
 Beyond these modifications, the **MCTS framework fits our abduction simulation naturally.** Because each agent typically has only a handful of viable actions at any give
 
+.
 
-## Value Function V(s, theta)
+.
+
+
+
+## Value Function V(s)
 
 In the AlphaZero framework, the **value function** is defined as a scalar mapping from a game state to an estimate of the long‑term outcome from that state. Formally:
 
@@ -210,4 +215,22 @@ Where:
 This differs from a **Q‑function** in classical reinforcement learning, which outputs a value for each **state–action** pair \( Q(s,a) \). The AlphaZero value head instead outputs **one scalar per state** — essentially asking *“How good is this state overall?”* rather than *“How good is this state **if I take this specific action**?”*  
 
 ---
+
+### Learning Objective
+
+The value head is trained to match the **final game outcome** from self‑play:
+
+```math
+\mathcal{L}_v = (V_\theta(s) - z)^2
+```
+
+Where:
+
+| Symbol              | Definition                                                                 |
+|---------------------|-----------------------------------------------------------------------------|
+| `𝓛_v`               | The **loss function** for the value head.                                  |
+| `V_\theta(s)`       | Predicted scalar value for state `s`.                                      |
+| `z`                 | Final game result used as the training label (e.g., +1, 0, or −1).         |
+
+By aligning predictions with outcomes, the network learns to estimate the likely result of a state **without requiring full rollouts**, making the search both faster and more informed.
 
