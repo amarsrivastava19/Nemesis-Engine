@@ -34,7 +34,7 @@ If the seekers can manage to consistently find the hider -  even when the hider 
 
 -------------------------------------------------
 
-# Foundations: Digital Twinw
+# The Simulation Build Protocol
 
 The generic build process for this simulation is noted as follows: 
 
