@@ -62,7 +62,7 @@ Network objects work well for this project as new data can be quickly integrated
 
 Implementation details regarding the build process can be found here-
 
-#### **Nemesis-Engine/scripts/Build the Digital Twin/Building the Digital Twin.ipynb**.
+#### **scripts/Build the Digital Twin/Building the Digital Twin.ipynb**.
 
 <br><br>
 
