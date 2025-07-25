@@ -296,7 +296,7 @@ By blending the game outcome `z` with the shaped proximity term `λ p(s)`, the n
 
 
 ### Example network design
-<img width="3000" height="1247" alt="Blank diagram - Page 1 (1)" src="https://github.com/user-attachments/assets/424e37e6-5034-41de-bcfe-91f8aa8e3fb8" />
+<img width="1200" height="1000" alt="Blank diagram - Page 1 (1)" src="https://github.com/user-attachments/assets/424e37e6-5034-41de-bcfe-91f8aa8e3fb8" />
 
 <br>
 
