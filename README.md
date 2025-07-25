@@ -34,9 +34,7 @@ If the seekers can manage to consistently find the hider -  even when the hider 
 
 -------------------------------------------------
 
-# The Build Process
-
-<img width="682" height="596" alt="image" src="https://github.com/user-attachments/assets/5c8b16e8-50cf-4857-bc7c-2f67bd98837e" />
+# Foundations: Digital Twinw
 
 The generic build process for this simulation is noted as follows: 
 
@@ -54,9 +52,9 @@ Steps 5-7 can then be cycled over and over until diminishing returns are had in 
 
 .
 
+The digital twin is created through using the OSM Overpass API to query road networks (at whatever resolutution or granularity - major, primary, and secondary motorways were chosen for this project). We can then extract the nodes and edges from this network graph and use that as the foundation for our model's environment. 
 
-.
-
+Network objects work well for this project as new data can be quickly integrated into the environment by simply associated any new data point with the nearest node on the graph. Thus, we can scale our model's complexity infinitely so long as the data points are spatially cast. 
 
 
 ------------------------------------------------------
