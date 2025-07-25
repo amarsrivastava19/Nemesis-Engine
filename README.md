@@ -302,8 +302,13 @@ By blending the game outcome `z` with the shaped proximity term `λ p(s)`, the n
 ### Example network design
 <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/51b56b51-8b32-4930-94d7-31ae2ac0cc31" />
 
+.
 
-Later on, inputting the environment itself as a gridded map may be a valuable modification to this function. AlphaZero used multiple convolutional networks to analyze the gridded boards of either Chess or Go, where precense of pieces on a grid were represented by 1s or 0s for a given vector. We avoid this right now, since given that the victory conditions for us, a seeker finding a hider, is far less complex than the movement and capture dynamics of chess. A "blind" analysis of our enivornment should be sufficient.  
+Later on, inputting the environment itself as a gridded map may be a valuable modification to this function. 
+
+AlphaZero used multiple convolutional networks to analyze the gridded boards of either Chess or Go, where precense of pieces on a grid were represented by 1s or 0s for a given vector.
+
+We avoid this right now, since given that the victory conditions for us, a seeker finding a hider, is far less complex than the movement and capture dynamics of chess. A "blind" analysis of our enivornment should be sufficient.  
 
 
 .
@@ -316,8 +321,66 @@ Later on, inputting the environment itself as a gridded map may be a valuable mo
 
 ## Policy Function π(θ,u,Ω)
 
+Before discussing the function itself, it is important to understand how we address the issue of our environment's size relative to any given agent's legal moveset. For a low-medium resolution network of the DSM metro, 32000 valid edges (16000 bidirectional) were extracted from the overpass API. It is infeasible for us to define a function that takes in local agent observations and outputs a softmax probability over all possible actions each agent can take in this environment. In the original paper, the ALphaZero protocol has a fixed set of a legal moves that are available in a chess board (King to e2, knight to b4,...). 
+
+When the AlphaZero policy runs, it uses a mask to set predicited probabilities over illegal moves to zero, and then renormalizes the remaining values to 1 over the legal moves. This is largely tractable because the set of all possible moves in chess are limited to an action space of around 1500 options and will be constant across all iterations of chess. 
+
+For us, we need to be able to increase or decrease road resolution (suppose data availability is sparse in some areas) or modify the geogrpahic size of our environment. We may need to able to run simulations on road networks as high as two hundred thousand to a million edges in count. Thus, it is unrealistic for us to be able to train networks that can accuratetly portion out predictions across the entire action space. 
+
+Instead, we use a **pointer policy** to dynamically adjust our action space on a per-agent basis - rather than setting policies over the entire simulation universe. 
+
+The general protocol is as follows: 
+
+- Create an embedding over the action space of all available edges in our simulation
+- Create a hash table lookup that maps edges to their respective embeddings
+- Perform the same embedding/hash lookup for static features of any given edge (distance, heading, isUrban, isRural, etc.)
+- For any given set of valid edges for an agent:
+-    Look up the edge embeddings and static feature embeddings for each edge
+-    Concatenate them linearly (sum them)
+- Take the dot product of agent observation vector features (encoded by deep network) and these valid edge features (encoded in previous step).
+- This essentially allows the agent's observation vector and the valid edge vector to "communicate" by first translating to a common language that the network develops as training goes on.
 
 
+To go into detail, -  in the policy, each edge action is represented by a **composite embedding** made up of two learned components:
+
+\[
+\mathbf{e}_a + g(x_a)
+\]
+
+Where:
+
+| Term             | Meaning                                                                 |
+|------------------|-------------------------------------------------------------------------|
+| `\mathbf{e}_a`   | **Learned embedding** for edge `a` from the `edge_embeddings` layer. Each edge ID maps to a trainable vector in the embedding space. |
+| `g(x_a)`         | **Learned projection** of the static features of edge `a` (e.g., length, road type). Computed by passing raw edge features through the `static_proj` dense layer, producing a vector in the same dimension as `\mathbf{e}_a`. |
+
+By summing these two representations, the model creates an **enriched edge embedding**:
+
+- `\mathbf{e}_a` provides an **ID‑based lookup** embedding for each edge.
+- `g(x_a)` injects **context** about that edge’s properties (like how long it is or whether it’s residential).
 
 
+The other half of the pointer policy relies on the observation vector - a collection of measures from the environment that is known and observable to a given agent. 
+
+ The **observation vector**  is noted as follows:
+
+```math
+\vec{o}_{t,i}
+```
+
+This vector is defined for each agent *i* at timestep *t* and is composed of the following attributes:
+
+| Feature         | Description                                                                 |
+|-----------------|-----------------------------------------------------------------------------|
+| `t`             | Current timestep.                                                           |
+| `n`             | Number of teammates nearby.                                                 |
+| `d_{H,j}`       | Haversine distance to teammate `j` (capped at 100).                         |
+| `d_{R,j}`       | Road network distance to teammate `j` (capped at 100).                      |
+| `α_θ`           | Current heading (absolute, relative to map center, normalized).             |
+| `β_θ`           | Heading to known victim location (absolute, relative to map center, normalized). |
+| `D_H`           | Haversine distance to last known victim location.                           |
+| `D_R`           | Road network distance to last known victim location.                        |
+| `ω`             | Binary indicator: is the agent on a high‑priority node (e.g., hiding spot)? |
+| `τ`             | Binary indicator: is the agent currently **traveling** (locked in motion)?  |
+| `t_{travel}`    | Remaining **travel time** until the agent finishes its current road segment.|
 
