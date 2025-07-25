@@ -1,4 +1,4 @@
-a# Nemesis-Engine
+aa# Nemesis-Engine
 #### Modeling rapid response to child abductions using multi-agent adversarial networks with Reinforcement Learning. 
 
 ![animation-ezgif com-resize](https://github.com/user-attachments/assets/d29810d4-77b8-4986-9c04-c72f8be14ed0) 
@@ -18,10 +18,7 @@ a# Nemesis-Engine
 
 **After this critical 3-hour mark, around 75% of victims are never found again.**
 
-.
-
-
-.
+<br><br>
 
 
 -----------------------------
@@ -37,9 +34,8 @@ Through reinforcement learning, both the seekers and the hider become more skill
 
 If the seekers can manage to consistently find the hider -  even when the hider becomes highly skilled at evading detection, - then we may have identified ways for teams of first responders to mobilize in respond to abduction events. 
 
-.
+<br><br>
 
-.
 
 
 
@@ -61,7 +57,8 @@ The generic build process for this simulation is noted as follows:
 
 Steps 5-7 can then be cycled over and over until diminishing returns are had in agent self-improvement.
 
-.
+<br>
+
 
 The digital twin is created through using the OSM Overpass API to query road networks (at whatever resolutution or granularity - major, primary, and secondary motorways were chosen for this project). We can then extract the nodes and edges from this network graph and use that as the foundation for our model's environment. 
 
@@ -91,9 +88,7 @@ The two deep neural networks that make up the "knowledge base" of the algorithm 
 
 Let's examine each piece in isolation.
 
-.
-
-.
+<br><br>
 
 
 ## Self-Play through modified Monte Carlo Tree Search
@@ -104,18 +99,18 @@ Here is this tree visualized for the simple case of Tic-Tac-Toe:
 
 <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/7c4d391d-bee1-4976-b1b7-7d5a3f5ecfd3" />
 
-.
+<br>
 
 
 When the state space is small, “solving” the game is straightforward: you can explore the entire tree to its terminal nodes and identify the optimal move in every situation. In Tic-Tac-Toe, an algorithm like MinMax can brute-force the entire tree, guaranteeing perfect play.
 
 For more complex games like chess, this approach collapses under the weight of combinatorial explosion. The number of possible move sequences grows exponentially with each ply, making it impossible to explore the full tree. Even with heavy pruning and heuristics, MinMax-style engines are typically limited to ~15–20 moves ahead, with 30–40 moves being an upper bound in specialized setups.
 
-.
+<br>
 
 <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/0ec5207a-3a77-4f31-9189-2df055ebc6db" />
 
-.
+<br>
 
 
 Monte Carlo Tree Search (MCTS) addresses this challenge by trading exhaustive exploration for probabilistic sampling. Instead of attempting to evaluate every branch, MCTS uses a tree policy to decide which branches to explore more deeply, balancing moves that look promising with those that haven’t been tried enough yet.
@@ -150,10 +145,8 @@ Early in the search, the exploration term dominates, ensuring a wide sampling of
 
 <img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/7f6a9fb2-b322-469a-8fd2-9a2e5a6f1f79" />
 
-.
+<br><br>
 
-
-.
 
 
 
@@ -161,7 +154,7 @@ Early in the search, the exploration term dominates, ensuring a wide sampling of
 
 Deepmind's seminal work with *AlphaZero* and *AlphaGo Zero* adapted this tree policy to include deep neural network functions - so that just given a board state and individual observations for an agent, the tree policy can be estimated without the need for doing exhaustive rollouts down the tree and backpropogation of values to update the MCTS policies. The two networks represent a sort of knowledge base that an agent can rely on to intuit which moves likely lead to the best rewards. 
 
-.
+<br>
 
 This policy, termed **Predictor + Upper Confidence Bound** (PUCT) is defined as follows:
 
@@ -240,7 +233,7 @@ Where:
 | `z`               | The **final game outcome** from the perspective of the current player (e.g., +1 for win, 0 for draw, −1 for loss). |
 | `θ`               | The **model parameters/weights** of the neural network producing the value. |
 
-.
+<br>
 
 
 The global state vector, **s**,  is defined as follows-
@@ -260,14 +253,16 @@ The global state vector, **s**,  is defined as follows-
 | `t_travel`      | Remaining **travel lock time** for an agent that has committed to a road.   |
 
 
-.
-
+<br>
 
 The neural network we use here is deliberately simple — framed as a regression model that takes the state vector 𝑠 and outputs a scalar value within (-1, 1).
 
 - A value of -1 indicates a state that ultimately led to the hider evading capture.
 
 - A value of +1 indicates a state that ultimately resulted in the hider being captured.
+
+- <br>
+
 
 ---
 
@@ -301,7 +296,7 @@ By blending the game outcome `z` with the shaped proximity term `λ p(s)`, the n
 ### Example network design
 <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/51b56b51-8b32-4930-94d7-31ae2ac0cc31" />
 
-.
+<br>
 
 Later on, inputting the environment itself as a gridded map may be a valuable modification to this function. 
 
@@ -309,11 +304,8 @@ AlphaZero used multiple convolutional networks to analyze the gridded boards of 
 
 We avoid this right now, since given that the victory conditions for us, a seeker finding a hider, is far less complex than the movement and capture dynamics of chess. A "blind" analysis of our enivornment should be sufficient.  
 
+<br><br>
 
-.
-
-
-.
 
 
 ------------------------------
@@ -340,9 +332,7 @@ The general protocol is as follows:
 - This essentially allows the agent's observation vector and the valid edge vector to "communicate" by first translating to a common language that the network develops as training goes on.
 
 
-.
-
-.
+<br><br>
 
 
 
@@ -367,10 +357,8 @@ By summing these two representations, the model creates an **enriched edge embed
 
 The other half of the pointer policy relies on the observation vector - a collection of measures from the environment that is known and observable to a given agent. 
 
-.
+<br><br>
 
-
-.
 
 
 
@@ -380,8 +368,7 @@ The other half of the pointer policy relies on the observation vector - a collec
 \vec{o}_{t,i}
 ```
 
-.
-
+<br>
 
 This vector is defined for each agent *i* at timestep *t* and is composed of the following attributes:
 
@@ -400,7 +387,7 @@ This vector is defined for each agent *i* at timestep *t* and is composed of the
 | `t_{travel}`    | Remaining **travel time** until the agent finishes its current road segment.|
 
 
-.
+<br>
 
 The networks autoencodes this vector into a learned represntation vector, `F(\vec{o}_{t,i})`, which can then communicate with the edge autoencoded vector from the previous step. 
 
