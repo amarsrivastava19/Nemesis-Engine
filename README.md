@@ -53,7 +53,7 @@ Steps 5-7 can then be cycled over and over until diminishing returns are had in 
 ------------------------------------------------------
 
 
-## Theoretical Framework
+# Theoretical Framework
 
 The framework of this engine is largely inspired by Google Deepmind's seminal work with AlphaZero and AlphaGo. These were algorithms that taught themselves how to play board games like chess and Go without any human guidance or intervention.
 
@@ -73,7 +73,7 @@ The two deep neural networks that make up the "knowledge base" of the algorithm 
 
 Let's examine each piece in isolation.
 
-### Self-Play through modified Monte Carlo Tree Search
+## Self-Play through modified Monte Carlo Tree Search
 
 In two-player board games, the sequence of actions taken by each side can be modeled as a game tree, where each layer corresponds to one player’s decisions, and the layer below represents the opponent’s responses. Consider the simple case of Tic-Tac-Toe:
 
