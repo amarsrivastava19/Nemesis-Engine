@@ -351,7 +351,7 @@ Where:
 
 | Term             | Meaning                                                                 |
 |------------------|-------------------------------------------------------------------------|
-| `\mathbf{e}_a`   | **Learned embedding** for edge `a` from the `edge_embeddings` layer. Each edge ID maps to a trainable vector in the embedding space. |
+| $\mathbf{e}_a$  | **Learned embedding** for edge `a` from the `edge_embeddings` layer. Each edge ID maps to a trainable vector in the embedding space. |
 | `g(x_a)`         | **Learned projection** of the static features of edge `a` (e.g., length, road type). Computed by passing raw edge features through the `static_proj` dense layer, producing a vector in the same dimension as `\mathbf{e}_a`. |
 
 By summing these two representations, the model creates an **enriched edge embedding**:
