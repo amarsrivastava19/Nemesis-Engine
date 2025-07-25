@@ -164,12 +164,15 @@ Early in the search, the exploration term dominates, ensuring a wide sampling of
 
 1. Agent has multiple choices in front of it
 2. UCB determines which choice it should explore
-3. Agent examines game state with UCB selection
+3. Agent examines the future game state with move determined by UCB
 4. Agent plays random moves until it reaches the end of the game or it hits its max move limit
-5. The results of the play is back propogated up the tree. Each node's visit count is updated, and if the play resulted to a win or loss the "reward" of the nodes are updated in accordance.
+5. The results of the play is back propogated up the tree.
+       -Each node's visit count is updated
+       -If the play resulted to a win or loss the "reward" of the nodes are updated in accordance.
 6. UCB is updated with new values
 7. Agent repeats from step 2 and continues until it hits the max simulation limit
-8. After simulation is over, Agent chooses the next action to move based on UCB and modifies the game state in the physical/virtual world.
+8. After simulation is over, Agent chooses the next action to move based on UCB again
+9. Agent modifies the game state in the physical/virtual world.
 
 <br>
 <br>
