@@ -397,10 +397,12 @@ The networks autoencodes this vector into a learned represntation vector, `F(\ve
 
 Thus the policy function is defined as follows-
 
-For each seeker *i*:
 
 ```math
 π_i(a | s) = softmax( f_iᵀ ( e_a + g(x_a) ) )
+```
+```math
+For each agent *i* in agent collection.
 ```
 
 .
