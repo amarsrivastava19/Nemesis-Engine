@@ -217,9 +217,11 @@ This means we dynamically adjust the **“legal moves”** available to an agent
 
 Beyond these modifications, the **MCTS framework fits our abduction simulation naturally.** Because each agent typically has only a handful of viable actions at any give
 
-.
 
-.
+
+
+
+
 
 ------------------------------
 
