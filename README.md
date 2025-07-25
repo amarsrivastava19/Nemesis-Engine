@@ -18,6 +18,12 @@
 
 **After this critical 3-hour mark, around 75% of victims are never found again.**
 
+.
+
+
+.
+
+
 -----------------------------
 
 
@@ -30,6 +36,11 @@ The engine simulates, or models, a game of "hide and seek". It pits a team of N 
 Through reinforcement learning, both the seekers and the hider become more skilled at thei respective roles. The team of seekers become better first-responders; the hider becomes a better evader.
 
 If the seekers can manage to consistently find the hider -  even when the hider becomes highly skilled at evading detection, - then we may have identified ways for teams of first responders to mobilize in respond to abduction events. 
+
+.
+
+.
+
 
 
 -------------------------------------------------
@@ -87,15 +98,17 @@ Let's examine each piece in isolation.
 
 ## Self-Play through modified Monte Carlo Tree Search
 
-In two-player board games, the sequence of actions taken by each side can be modeled as a game tree, where each layer corresponds to one player’s decisions, and the layer below represents the opponent’s responses. Consider the simple case of Tic-Tac-Toe:
+In two-player board games, the sequence of actions taken by each side can be modeled as a game tree, where each layer corresponds to one player’s decisions, and the layer below represents the opponent’s responses.
 
-<img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/7c4d391d-bee1-4976-b1b7-7d5a3f5ecfd3" />
+Here is this tree visualized for the simple case of Tic-Tac-Toe:
+
+<img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/7c4d391d-bee1-4976-b1b7-7d5a3f5ecfd3" />
 
 
 When the state space is small, “solving” the game is straightforward: you can explore the entire tree to its terminal nodes and identify the optimal move in every situation. In Tic-Tac-Toe, an algorithm like MinMax can brute-force the entire tree, guaranteeing perfect play.
 
 
-<img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/0ec5207a-3a77-4f31-9189-2df055ebc6db" />
+<img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/0ec5207a-3a77-4f31-9189-2df055ebc6db" />
 
 For more complex games like chess, this approach collapses under the weight of combinatorial explosion. The number of possible move sequences grows exponentially with each ply, making it impossible to explore the full tree. Even with heavy pruning and heuristics, MinMax-style engines are typically limited to ~15–20 moves ahead, with 30–40 moves being an upper bound in specialized setups.
 
