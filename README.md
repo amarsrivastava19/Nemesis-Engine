@@ -341,6 +341,12 @@ The general protocol is as follows:
 - This essentially allows the agent's observation vector and the valid edge vector to "communicate" by first translating to a common language that the network develops as training goes on.
 
 
+.
+
+.
+
+
+
 To go into detail, -  in the policy, each edge action is represented by a **composite embedding** made up of two learned components:
 
 ```math
@@ -384,3 +390,27 @@ This vector is defined for each agent *i* at timestep *t* and is composed of the
 | `τ`             | Binary indicator: is the agent currently **traveling** (locked in motion)?  |
 | `t_{travel}`    | Remaining **travel time** until the agent finishes its current road segment.|
 
+
+.
+
+The networks autoencodes this vector into a learned represntation vector, `F(\vec{o}_{t,i})`, which can then communicate with the edge autoencoded vector from the previous step. 
+
+Thus the policy function is defined as follows-
+
+For each seeker *i*:
+
+```
+π_i(a | s) = softmax( f_iᵀ ( e_a + g(x_a) ) )
+```
+
+.
+
+Where:
+
+| Symbol    | Description                                                   |
+|-----------|---------------------------------------------------------------|
+| `f_i`     | Projected feature vector of seeker *i*.                       |
+| `e_a`     | Learned embedding for edge *a*.                               |
+| `g(x_a)`  | Projection of static features for edge *a*.                   |
+
+The **dot product** (`f_iᵀ · (e_a + g(x_a))`) produces a raw **score** for each edge, which is then normalized via **softmax** into a probability distribution over the valid actions for that seeker.
