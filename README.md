@@ -191,6 +191,7 @@ When the game concludes, the **final outcome** (win/loss/draw) is appended to ea
 - The **policy network** improves at predicting which actions MCTS would favor.  
 - The **value network** gets better at distinguishing promising states from poor ones, helping guide which nodes the search should expand next.  
 
+<br><br>
 
 ## Modified MCTS for Abduction Simulations
 
@@ -261,9 +262,11 @@ The neural network we use here is deliberately simple — framed as a regression
 - A value of -1 indicates a state that ultimately led to the hider evading capture.
 
 - A value of +1 indicates a state that ultimately resulted in the hider being captured.
+- 
+### Example network design
+<img width="1200" height="1000" alt="Blank diagram - Page 1 (1)" src="https://github.com/user-attachments/assets/424e37e6-5034-41de-bcfe-91f8aa8e3fb8" />
 
-- <br>
-
+<br>
 
 ---
 
@@ -293,11 +296,6 @@ The **proximity bonus** provides denser feedback:
 
 By blending the game outcome `z` with the shaped proximity term `λ p(s)`, the network learns not only from the final win/loss signal but also from meaningful **intermediate progress**. This helps the value function converge faster and supports deeper planning without requiring exhaustive rollouts.
 <br><br>
-
-### Example network design
-<img width="1200" height="1000" alt="Blank diagram - Page 1 (1)" src="https://github.com/user-attachments/assets/424e37e6-5034-41de-bcfe-91f8aa8e3fb8" />
-
-<br>
 
 Later on, inputting the environment itself as a gridded map may be a valuable modification to this function. 
 
