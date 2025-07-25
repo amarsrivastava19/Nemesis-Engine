@@ -86,9 +86,24 @@ Observe that when the agent's environment's is small, the problem of "solving" t
 
 However, with games like chess, it becomes intractable to explore the entire tree since the combinations of moves grows exponentially the longer the game goes. As such, even MinMax algorithms typically limit their searches to only look forward ~15-20 moves at a time. Even with modern optimizations and heuristics guiding the search, a 30-40 move lookahead is a practical ceiling. 
 
-Monte Carlo Tree Search (MCTS) addresses this challenge for high-cardinality combinatorial spaces by synthesizing best-first search through repeated sampling. While MinMax seeks to explore every possible tree branch, MCTS utilizes an internal tree policy to choose which branches to explore probabilistically. The most common tree policy is the **Upper Confidence Bound for Trees** (UCB1). 
+Monte Carlo Tree Search (MCTS) addresses this challenge for high-cardinality combinatorial spaces by synthesizing best-first search through repeated sampling. While MinMax seeks to explore every possible tree branch, MCTS utilizes an internal tree policy to choose which branches to explore probabilistically. \
+
+The most common tree policy is the **Upper Confidence Bound for Trees** (UCB1):
 
 ```math
 a^* = \arg\max_a \left[ Q(s, a) + C \sqrt{\frac{\ln N(s)}{N(s, a)}} \right]
 ```
+
+Where: 
+
+| Symbol       | Definition                                                                 |
+|--------------|-----------------------------------------------------------------------------|
+| `a`          | Candidate action from the current state `s`.                               |
+| `a^*`        | Action selected by the search policy (argmax output).                      |
+| `Q(s, a)`    | **Empirical mean return** (average reward) for taking action `a` in state `s`. |
+| `N(s)`       | Number of times state `s` has been visited.                                 |
+| `N(s, a)`    | Number of times action `a` has been taken from state `s`.                   |
+| `W(s, a)`    | Cumulative sum of rewards obtained after taking `a` from `s` (used to compute `Q`). |
+| `C`          | **Exploration constant** for UCT; balances exploration vs exploitation.     |
+| `\ln N(s)`   | Natural logarithm of state visit count (used in the exploration term).      |
 
