@@ -104,13 +104,19 @@ Here is this tree visualized for the simple case of Tic-Tac-Toe:
 
 <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/7c4d391d-bee1-4976-b1b7-7d5a3f5ecfd3" />
 
+.
+
 
 When the state space is small, “solving” the game is straightforward: you can explore the entire tree to its terminal nodes and identify the optimal move in every situation. In Tic-Tac-Toe, an algorithm like MinMax can brute-force the entire tree, guaranteeing perfect play.
 
+For more complex games like chess, this approach collapses under the weight of combinatorial explosion. The number of possible move sequences grows exponentially with each ply, making it impossible to explore the full tree. Even with heavy pruning and heuristics, MinMax-style engines are typically limited to ~15–20 moves ahead, with 30–40 moves being an upper bound in specialized setups.
+
+.
 
 <img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/0ec5207a-3a77-4f31-9189-2df055ebc6db" />
 
-For more complex games like chess, this approach collapses under the weight of combinatorial explosion. The number of possible move sequences grows exponentially with each ply, making it impossible to explore the full tree. Even with heavy pruning and heuristics, MinMax-style engines are typically limited to ~15–20 moves ahead, with 30–40 moves being an upper bound in specialized setups.
+.
+
 
 Monte Carlo Tree Search (MCTS) addresses this challenge by trading exhaustive exploration for probabilistic sampling. Instead of attempting to evaluate every branch, MCTS uses a tree policy to decide which branches to explore more deeply, balancing moves that look promising with those that haven’t been tried enough yet.
 
