@@ -43,7 +43,9 @@ If the seekers can manage to consistently find the hider -  even when the hider 
 # The Simulation Build Protocol
 
 The generic build process for this simulation is noted as follows: 
+
 <br>
+
 1. Build a "digital twin" of a geographic region
 2. Develop a way to place agents dynamically in the environment.
 3. Construct a global value function (Critic or Q-function)
@@ -53,6 +55,8 @@ The generic build process for this simulation is noted as follows:
    - Append simulation outcomes to global game states
 6. Train Global Value Function against simulation game states.
 7. Train Local Policy Function against MCTS derived policies
+
+<br>
 
 Steps 5-7 can then be cycled over and over until diminishing returns are had in agent self-improvement.
 
