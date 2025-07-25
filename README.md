@@ -225,8 +225,8 @@ The neural network we use here is deliberately simple — framed as a regression
 .
 
 
-Example network design: 
-<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/51b56b51-8b32-4930-94d7-31ae2ac0cc31" />
+### Example network design
+<img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/51b56b51-8b32-4930-94d7-31ae2ac0cc31" />
 
 
 Later on, inputting the environment itself as a gridded map may be a valuable modification to this function. AlphaZero used multiple convolutional networks to analyze the gridded boards of either Chess or Go, where precense of pieces on a grid were represented by 1s or 0s for a given vector. We avoid this right now, since given that the victory conditions for us, a seeker finding a hider, is far less complex than the movement and capture dynamics of chess. A "blind" analysis of our enivornment should be sufficient.  
