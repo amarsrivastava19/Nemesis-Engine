@@ -197,7 +197,7 @@ Beyond these modifications, the **MCTS framework fits our abduction simulation n
 
 
 
-## Value Function V(s)
+## Value Function V(θ,s)
 
 In the AlphaZero framework, the **value function** is defined as a scalar mapping from a game state to an estimate of the long‑term outcome from that state. Formally:
 
@@ -244,11 +244,10 @@ The neural network we use here is deliberately simple — framed as a regression
 
 - A value of +1 indicates a state that ultimately resulted in the hider being captured.
 
-.
 
 
 ### Example network design
-<img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/51b56b51-8b32-4930-94d7-31ae2ac0cc31" />
+<img width="1000" height="800" alt="image" src="https://github.com/user-attachments/assets/51b56b51-8b32-4930-94d7-31ae2ac0cc31" />
 
 
 Later on, inputting the environment itself as a gridded map may be a valuable modification to this function. AlphaZero used multiple convolutional networks to analyze the gridded boards of either Chess or Go, where precense of pieces on a grid were represented by 1s or 0s for a given vector. We avoid this right now, since given that the victory conditions for us, a seeker finding a hider, is far less complex than the movement and capture dynamics of chess. A "blind" analysis of our enivornment should be sufficient.  
@@ -281,3 +280,11 @@ The **proximity bonus** provides denser feedback:
 - **The hider** is penalized when seekers get too close, incentivizing evasive movement.  
 
 By blending the game outcome `z` with the shaped proximity term `λ p(s)`, the network learns not only from the final win/loss signal but also from meaningful **intermediate progress**. This helps the value function converge faster and supports deeper planning without requiring exhaustive rollouts.
+
+
+
+## Policy Function π(θ,u,Ω)
+
+
+
+
