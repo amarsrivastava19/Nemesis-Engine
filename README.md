@@ -320,15 +320,17 @@ We avoid this right now, since given that the victory conditions for us, a seeke
 
 ## Policy Function π(θ,u,Ω)
 
-Before discussing the function itself, it is important to understand how we address the issue of our environment's size relative to any given agent's legal moveset. For a low-medium resolution network of the DSM metro, 32000 valid edges (16000 bidirectional) were extracted from the overpass API. It is infeasible for us to define a function that takes in local agent observations and outputs a softmax probability over all possible actions each agent can take in this environment. In the original paper, the ALphaZero protocol has a fixed set of a legal moves that are available in a chess board (King to e2, knight to b4,...). 
+Before discussing the function itself, it is important to understand how we address the issue of our environment's size relative to any given agent's legal moveset. For a low-medium resolution network of the DSM metro, 32000 valid edges (16000 bidirectional) were extracted from the overpass API. It is infeasible for us to define a function that takes in local agent observations and outputs a softmax probability over all possible actions each agent can take in this environment. 
 
-When the AlphaZero policy runs, it uses a mask to set predicited probabilities over illegal moves to zero, and then renormalizes the remaining values to 1 over the legal moves. This is largely tractable because the set of all possible moves in chess are limited to an action space of around 1500 options and will be constant across all iterations of chess. 
+In the original paper, the AlphaZero protocol has a fixed set of a legal moves that are available in a chess board (King to e2, knight to b4,...). When the AlphaZero policy runs, it uses a mask to set predicited probabilities over illegal moves to zero, and then renormalizes the remaining values to 1 over the legal moves. This is largely tractable because the set of all possible moves in chess are limited to an action space of around 1500 options and will be constant across all iterations of chess. 
 
 For us, we need to be able to increase or decrease road resolution (suppose data availability is sparse in some areas) or modify the geogrpahic size of our environment. We may need to able to run simulations on road networks as high as two hundred thousand to a million edges in count. Thus, it is unrealistic for us to be able to train networks that can accuratetly portion out predictions across the entire action space. 
 
 Instead, we use a **pointer policy** to dynamically adjust our action space on a per-agent basis - rather than setting policies over the entire simulation universe. 
+<br>
 
 The general protocol is as follows: 
+<br>
 
 - Create an embedding over the action space of all available edges in our simulation
 - Create a hash table lookup that maps edges to their respective embeddings
