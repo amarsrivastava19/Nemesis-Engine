@@ -392,14 +392,15 @@ This vector is defined for each agent *i* at timestep *t* and is composed of the
 <br>
 
 The networks autoencodes this vector into a learned represntation vector, `F(\vec{o}_{t,i})`, which can then communicate with the edge autoencoded vector from the previous step. 
+<br>
 
 Thus the policy function is defined as follows-
-
 
 ```math
 π_i(a | s) = softmax( f_iᵀ · ( e_a + g(x_a) ) )
 ```
 **For each agent *i* in the agent set.**
+<br>
 
 We have:
 
