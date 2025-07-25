@@ -16,7 +16,7 @@
 
 **They then have another 90 minutes to carry out a rescue attempt.**
 
-**After this critical 3-hour mark, around 75% of victims are either never found again.**
+**After this critical 3-hour mark, around 75% of victims are never found again.**
 
 -----------------------------
 
@@ -71,5 +71,24 @@ The two deep neural networks that make up the "knowledge base" of the algorithm 
  - A global value estimator: a function that takes in an environment state vector and outputs a value between (-1,1). You can lazily interpret this value as the probability of failure/success of the current game state. 
  - A local policy header: a function that takes in agent's observation and outputs a probability distribution across the valid choices an agent can make at that given timestep.
 
+Let's examine each piece in isolation.
 
+### Self-Play through modified Monte Carlo Tree Search
+
+Traditionally, in the context of board games, where two agents take actions in a non-cooperative fashion, we can model the sequence of actions taken by each agent as a graph tree - where each layer contains the choices available to the given agent, and the layer below it represents the choices available to the opposing agent.  Here is a simple example from the game of Tic-Tac-Toe:
+
+<img width="1050" height="794" alt="image" src="https://github.com/user-attachments/assets/7c4d391d-bee1-4976-b1b7-7d5a3f5ecfd3" />
+
+Observe that when the agent's environment's is small, the problem of "solving" the game becomes tractable. In the case of tic-tac-toe, where there are only so many possible moves, an algorithm could be designed to figure out the optimal move for each agent by simply exploring this tree down to its terminal condition. Algorithms like MinMax have been developed to do just this and have been successfully been applied to board games like chess. 
+
+<img width="1400" height="932" alt="image" src="https://github.com/user-attachments/assets/0ec5207a-3a77-4f31-9189-2df055ebc6db" />
+
+
+However, with games like chess, it becomes intractable to explore the entire tree since the combinations of moves grows exponentially the longer the game goes. As such, even MinMax algorithms typically limit their searches to only look forward ~15-20 moves at a time. Even with modern optimizations and heuristics guiding the search, a 30-40 move lookahead is a practical ceiling. 
+
+Monte Carlo Tree Search (MCTS) addresses this challenge for high-cardinality combinatorial spaces by synthesizing best-first search through repeated sampling. While MinMax seeks to explore every possible tree branch, MCTS utilizes an internal tree policy to choose which branches to explore probabilistically. The most common tree policy is the **Upper Confidence Bound for Trees** (UCB1). 
+
+```math
+a^* = \arg\max_a \left[ Q(s, a) + C \sqrt{\frac{\ln N(s)}{N(s, a)}} \right]
+```
 
