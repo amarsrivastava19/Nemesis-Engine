@@ -73,6 +73,11 @@ The two deep neural networks that make up the "knowledge base" of the algorithm 
 
 Let's examine each piece in isolation.
 
+.
+
+.
+
+
 ## Self-Play through modified Monte Carlo Tree Search
 
 In two-player board games, the sequence of actions taken by each side can be modeled as a game tree, where each layer corresponds to one player’s decisions, and the layer below represents the opponent’s responses. Consider the simple case of Tic-Tac-Toe:
@@ -177,10 +182,11 @@ This team aspect changes the math of the search entirely. MCTS now needs to cons
 
 Every distinct combination of actions must be accounted for — and the tree expands accordingly.
 
+We’ll also need to **modify the available agent actions** to account for **travel time** and, eventually, **investigation time**. Let’s assume each “turn” in the game represents **one minute of real‑world time**. If an agent commits to a road, it’s locked into that choice for the road’s entire duration. By assuming a travel speed and using each edge’s length, we can calculate this time cost precisely.  
 
+This means we dynamically adjust the **“legal moves”** available to an agent depending on its current state — whether it’s *traveling* or *at rest*. The same principle applies to **investigations**: if an agent chooses to investigate a node, it incurs a time penalty in exchange for the chance of discovering the hider.  
 
-
-
+Beyond these modifications, the **MCTS framework fits our abduction simulation naturally.** Because each agent typically has only a handful of viable actions at any give
 
 
 
