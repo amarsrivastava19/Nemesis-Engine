@@ -409,6 +409,8 @@ We have:
 
 The **dot product** (`f_iᵀ · (e_a + g(x_a))`) produces a raw **score** for each edge, which is then normalized via **softmax** into a probability distribution over the valid actions for that seeker.
 
+<br>
+<br>
 
 ### Example Network Diagram
 
