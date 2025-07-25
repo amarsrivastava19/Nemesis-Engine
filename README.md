@@ -122,7 +122,7 @@ This formula has two parts:
 Early in the search, the exploration term dominates, ensuring a wide sampling of possibilities. As the tree fills out, the exploitation term becomes more precise, and exploration pressure naturally fades — allowing the algorithm to focus on the most promising branches.
 
 
-<img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/7f6a9fb2-b322-469a-8fd2-9a2e5a6f1f79" />
+<img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/7f6a9fb2-b322-469a-8fd2-9a2e5a6f1f79" />
 
 .
 
