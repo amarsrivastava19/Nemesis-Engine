@@ -94,13 +94,6 @@ For more complex games like chess, this approach collapses under the weight of c
 
 Monte Carlo Tree Search (MCTS) addresses this challenge by trading exhaustive exploration for probabilistic sampling. Instead of attempting to evaluate every branch, MCTS uses a tree policy to decide which branches to explore more deeply, balancing moves that look promising with those that haven’t been tried enough yet.
 
-.
-
-
-<img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/7f6a9fb2-b322-469a-8fd2-9a2e5a6f1f79" />
-
-.
-
 The most common tree policy is the **Upper Confidence Bound for Trees** (UCB1):
 
 ```math
@@ -127,6 +120,13 @@ This formula has two parts:
 - **Exploration** : The square-root term biases the search toward under-visited moves to gather more information.
   
 Early in the search, the exploration term dominates, ensuring a wide sampling of possibilities. As the tree fills out, the exploitation term becomes more precise, and exploration pressure naturally fades — allowing the algorithm to focus on the most promising branches.
+
+
+<img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/7f6a9fb2-b322-469a-8fd2-9a2e5a6f1f79" />
+
+.
+
+.
 
 Deepmind's seminal work with *AlphaZero* and *AlphaGo Zero* adapted this tree policy to include deep neural network functions - so that just given a board state and individual observations for an agent, the tree policy can be estimated without the need for doing exhaustive rollouts down the tree and backpropogation of values to update the MCTS policies. The two networks represent a sort of knowledge base that an agent can rely on to intuit which moves likely lead to the best rewards. 
 
