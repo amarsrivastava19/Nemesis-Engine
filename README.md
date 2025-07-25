@@ -77,11 +77,11 @@ Let's examine each piece in isolation.
 
 Traditionally, in the context of board games, where two agents take actions in a non-cooperative fashion, we can model the sequence of actions taken by each agent as a graph tree - where each layer contains the choices available to the given agent, and the layer below it represents the choices available to the opposing agent.  Here is a simple example from the game of Tic-Tac-Toe:
 
-<img width="800" height="600" alt="image" src="https://github.com/user-attachments/assets/7c4d391d-bee1-4976-b1b7-7d5a3f5ecfd3" />
+<img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/7c4d391d-bee1-4976-b1b7-7d5a3f5ecfd3" />
 
 Observe that when the agent's environment's is small, the problem of "solving" the game becomes tractable. In the case of tic-tac-toe, where there are only so many possible moves, an algorithm could be designed to figure out the optimal move for each agent by simply exploring this tree down to its terminal condition. Algorithms like MinMax have been developed to do just this and have been successfully been applied to board games like chess. 
 
-<img width="800" height="600" alt="image" src="https://github.com/user-attachments/assets/0ec5207a-3a77-4f31-9189-2df055ebc6db" />
+<img width="600" height="400" alt="image" src="https://github.com/user-attachments/assets/0ec5207a-3a77-4f31-9189-2df055ebc6db" />
 
 
 However, with games like chess, it becomes intractable to explore the entire tree since the combinations of moves grows exponentially the longer the game goes. As such, even MinMax algorithms typically limit their searches to only look forward ~15-20 moves at a time. Even with modern optimizations and heuristics guiding the search, a 30-40 move lookahead is a practical ceiling. 
