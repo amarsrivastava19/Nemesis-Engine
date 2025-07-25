@@ -152,9 +152,14 @@ This formula has two parts:
 - **Exploration** : The square-root term biases the search toward under-visited moves to gather more information.
   
 Early in the search, the exploration term dominates, ensuring a wide sampling of possibilities. As the tree fills out, the exploitation term becomes more precise, and exploration pressure naturally fades — allowing the algorithm to focus on the most promising branches.
+<br>
+<br>
 
 ## Simple Summary of MCTS Steps
 <img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/7f6a9fb2-b322-469a-8fd2-9a2e5a6f1f79" />
+
+<br>
+
 <br>
 
 1. Agent has multiple choices in front of it
