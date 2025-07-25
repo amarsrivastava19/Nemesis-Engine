@@ -343,9 +343,9 @@ The general protocol is as follows:
 
 To go into detail, -  in the policy, each edge action is represented by a **composite embedding** made up of two learned components:
 
-\[
+```
 \mathbf{e}_a + g(x_a)
-\]
+```
 
 Where:
 
