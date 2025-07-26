@@ -3,7 +3,7 @@
 <br>
 <br>
 
-![nemesis_gif](https://github.com/user-attachments/assets/7a639b42-8bad-4966-ba8c-b7f96323c12b)
+https://github.com/user-attachments/assets/ac84c7dc-33c9-420d-b687-1a0ddf51f9f8
 
 <br>
 <br>
