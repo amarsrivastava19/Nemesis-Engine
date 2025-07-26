@@ -1,11 +1,14 @@
 # Nemesis-Engine
 ## Modeling rapid response to child abductions using multi-agent adversarial networks with Reinforcement Learning. 
 
+<br>
+<br>
 
 
 https://github.com/user-attachments/assets/1825cab6-9425-4551-bf3b-bdd798e6ea1a
 
 
+<br>
 <br>
 
 # Problem Statement 
